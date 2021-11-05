@@ -47,3 +47,28 @@
     </div>
   </footer>
 </div>
+
+<!-- Result Modal -->
+<input type="hidden" id="resultModalOn" data-bs-toggle="modal" data-bs-target="#resultModal"/>
+<div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLabel">
+        
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<div class="row mb-3">
+		  <div class="col-12" id="resultModalContent">
+		  
+		  </div>
+	    </div>
+      </div>
+      <div class="modal-footer">
+        <a role="button" class="btn btn-primary" id="resultModalButton">OK</a>
+      </div>
+    </div>
+  </div>
+</div>

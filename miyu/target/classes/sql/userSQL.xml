@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miyu.user">
+	<select id="duplicateIdCheck" resultType="int">
+		SELECT COUNT(*) FROM user WHERE userid = #{userid }
+	</select>
+	
+	<insert id="signup" parameterType="user">
+		INSERT INTO user
+		VALUES(get_seq('user'), #{userid}, #{userpwd}, #{username}, 0, NOW())
+	</insert>
+</mapper>

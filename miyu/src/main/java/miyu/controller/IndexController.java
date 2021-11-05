@@ -1,16 +1,18 @@
 package miyu.controller;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
 	
-	@RequestMapping
-	public ModelAndView index() {
+	@RequestMapping("/index.do")
+	public String index(HttpSession session) {
 		Calendar c = Calendar.getInstance();
 		c.set(c.YEAR, 2018);
 		c.set(c.MONTH, 9);
@@ -20,10 +22,10 @@ public class IndexController {
 		long date = c.getTimeInMillis();
 		long period = (now-date)/1000/60/60/24;
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("period", (int) period);
-		mav.setViewName("index");
-		return mav;
+		DecimalFormat df = new DecimalFormat("###,###");
+		session.setAttribute("period", df.format(period));
+		
+		return "index";
 	}
 	
 }

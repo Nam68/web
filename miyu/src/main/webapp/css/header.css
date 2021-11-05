@@ -7,18 +7,21 @@
 	-moz-user-select: none;
 	user-select: none;
 }
+
+@media (min-width: 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+
 .titleImg {
 	margin-left: 1%;
 	width: 18vh;
 	height: 90%;
 }
+
 .titleImg :hover {
 	cursor: pointer;
-}
-@media (min-width: 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
 }
      
 header {

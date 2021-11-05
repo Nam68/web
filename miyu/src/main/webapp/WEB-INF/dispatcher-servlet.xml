@@ -18,8 +18,10 @@
 	</bean>
 	
 	<!-- DAOs -->
+	<bean id="userDao" class="miyu.user.model.UserDAOImple"></bean>
 
 	<!-- Service -->
+	<bean id="userService" class="miyu.user.service.UserServiceImple"></bean>
 
 	<!-- views & apps -->
 	

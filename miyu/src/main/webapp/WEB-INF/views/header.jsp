@@ -29,7 +29,7 @@
     <div class="px-3 py-2 bg-dark text-white">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+          <a href="index.do" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstra2p"/></svg>
             <img alt="titleImg" src="http://epoche02.cafe24.com/img/title_light.png" class="bi me-2" width="150" height="60">
           </a>
@@ -62,8 +62,8 @@
           </ul>
           <div class="text-end align-middle">
 	        <ul class="nav">
-	          <li class="nav-item"><a href="#" class="nav-link link-light px-2">Login</a></li>
-	          <li class="nav-item"><a href="#" class="nav-link link-light px-2">Sign up</a></li>
+	          <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Login</a></li>
+	          <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
 	        </ul>
           </div>
         </div>
@@ -72,7 +72,7 @@
   </header>
   
 <div class="labelDiv">
-	<label>今までの${period}日<br>これからもよろしく</label>
+	<label>今までの${sessionScope.period}日<br>これからもよろしく</label>
 </div>
 <div class="imgDiv">
 	<img alt="mainImg" src="http://epoche02.cafe24.com/img/mainImg.JPG" class="mainImg">

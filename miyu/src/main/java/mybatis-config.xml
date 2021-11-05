@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <typeAliases>
-
+	<typeAlias type="miyu.user.model.UserDTO" alias="user"/>
   </typeAliases>
   <mappers>
-
+	<mapper resource="sql/userSQL.xml"/>
   </mappers>
 </configuration>
