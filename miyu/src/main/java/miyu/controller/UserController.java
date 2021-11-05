@@ -1,5 +1,7 @@
 package miyu.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,24 @@ public class UserController {
 		return "user/login";
 	}
 	
-	@RequestMapping(value = "/signup.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int login(UserDTO dto, HttpSession session) {
+		UserDTO user = us.login(dto);
+		session.setAttribute("userDTO", user);
+		int count = user == null? 0:1;
+		return count;
+	}
+	
+	@RequestMapping("/logout.do")
+	@ResponseBody
+	public int logout(HttpSession session) {
+		session.invalidate();
+		return 1;
+	}
+	
+	
+	@RequestMapping("/signup.do")
 	public String signup() {
 		return "user/signup";
 	}

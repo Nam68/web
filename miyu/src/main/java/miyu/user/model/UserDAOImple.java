@@ -16,9 +16,8 @@ public class UserDAOImple implements UserDAO {
 		return sql.insert("signup", dto);
 	}
 
-	public UserDTO login(String id, String pwd) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDTO login(UserDTO dto) {
+		return sql.selectOne("login", dto);
 	}
 
 	public int updatePermit(int useridx, int permit) {

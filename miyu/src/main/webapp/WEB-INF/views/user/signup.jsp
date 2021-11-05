@@ -26,7 +26,7 @@ window.onload = function() {
     <hr>
     <div class="col-lg-6 mx-auto">
       <div class="lead mb-4 text-start">
-		<form action="index.do" method="post">
+		<form>
 		  <div class="row mb-3">
 		    <div class="col-12">
 		      <label for="inputId" class="form-label">ID <span class="badge bg-secondary ms-3" id="duplicateIdCheck" role="button" data-bs-toggle="modal" data-bs-target="#duplicateIdCheckModal">Duplicate ID check</span></label>
@@ -104,7 +104,7 @@ window.onload = function() {
 		  					},
 		  				method: 'POST',
 		  				success: function(data, status) {
-		  					if(data < 0) {
+		  					if(data > 0) {
 		  						$('#resultModalLabel').html('Welcome!!');
 		  						$('#resultModalContent').html('Please wait for administrator\'s approval');
 		  						$('#resultModalButton').attr('href', 'index.do');
@@ -116,8 +116,8 @@ window.onload = function() {
 		  					$('#resultModalOn').trigger('click');
 		  				}		  				
 		  			})
-		  			.fail(function(xhr, status, errorThrown) {
-					    window.alert('request failed : '+errorThrown);
+		  			.fail(function(xhr, status) {
+					    window.alert('request failed : '+status);
 					});
 		  			$('#resultModalOn').trigger('click');
 		  		}
@@ -175,8 +175,8 @@ $('#inputIdCheckButton').on('click', function() {
 			}
 		}
 	})
-	.fail(function(xhr, status, errorThrown) {
-	    window.alert('request failed : '+errorThrown);
+	.fail(function(xhr, status) {
+	    window.alert('request failed : '+status);
 	});
 });
 $('#useCheckedIdButton').on('click', function() {

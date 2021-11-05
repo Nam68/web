@@ -4,7 +4,7 @@ public interface UserDAO {
 	
 	public int duplicateIdCheck(String id);
 	public int signup(UserDTO dto);
-	public UserDTO login(String id, String pwd);
+	public UserDTO login(UserDTO dto);
 	public int updatePermit(int useridx, int permit);
 	
 }

@@ -72,3 +72,29 @@
     </div>
   </div>
 </div>
+
+<!-- Confirm Modal -->
+<input type="hidden" id="confirmModalOn" data-bs-toggle="modal" data-bs-target="#confirmModal"/>
+<div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">
+        
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<div class="row mb-3">
+		  <div class="col-12" id="confirmModalContent">
+		  
+		  </div>
+	    </div>
+      </div>
+      <div class="modal-footer">
+        <a role="button" class="btn btn-primary" id="confirmModalSubmitButton">OK</a>
+        <a role="button" class="btn btn-outline-secondary" id="confirmModalCancelButton"  data-bs-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>

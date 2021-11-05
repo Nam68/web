@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -61,10 +62,46 @@
             </li>
           </ul>
           <div class="text-end align-middle">
-	        <ul class="nav">
-	          <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Login</a></li>
-	          <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
-	        </ul>
+            <c:if test="${empty sessionScope.userDTO }">
+	          <ul class="nav">
+	            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Log in</a></li>
+	            <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
+	          </ul>
+	        </c:if>
+	        <c:if test="${!empty sessionScope.userDTO }">
+	          <ul class="nav">
+	            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Hello, ${sessionScope.userDTO.username }! </a></li>
+	            <li class="nav-item" id="navLogout"><a role="button" class="nav-link link-light px-2"> Log out</a></li>
+	          </ul>
+	          <script>
+	          	$('#navLogout').on('click', function() {
+	          		$('#confirmModalLabel').html('Log out');
+	          		$('#confirmModalContent').html('Are you sure?');
+	          		$('#confirmModalSubmitButton').on('click', function() {
+	          			$.ajax({
+	          				url: 'logout.do',
+	          				success: function(data) {
+	          					if(data > 0) {
+	          						$('#resultModalLabel').html('Log out success');
+	          						$('#resultModalContent').html('See you later!');
+	          						$('#resultModalButton').attr('href', 'index.do');
+	          						$('#resultModalOn').trigger('click');
+	          					} else {
+	          						$('#resultModalLabel').html('Log out failed');
+	          						$('#resultModalContent').html('There is something wrong with our server...');
+	          						$('#resultModalButton').attr('data-bs-dismiss', 'modal');
+	          						$('#resultModalOn').trigger('click');
+	          					}
+	          				}
+	          			})
+	          			.fail(function(xhr, status) {
+	          				window.alert('request fail:'+status);
+	          			})
+	          		});
+	          		$('#confirmModalOn').trigger('click');
+	          	});
+	          </script>
+	        </c:if>
           </div>
         </div>
       </div>

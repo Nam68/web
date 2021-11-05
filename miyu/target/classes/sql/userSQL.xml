@@ -6,6 +6,9 @@
 	<select id="duplicateIdCheck" resultType="int">
 		SELECT COUNT(*) FROM user WHERE userid = #{userid }
 	</select>
+	<select id="login" resultType="user">
+		SELECT * FROM user WHERE userid = #{userid} AND userpwd = #{userpwd}
+	</select>
 	
 	<insert id="signup" parameterType="user">
 		INSERT INTO user
