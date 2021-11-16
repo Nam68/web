@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miyu.memory">
+	<select id="memoryCount" resultType="int">
+		SELECT COUNT(*) FROM memory
+	</select>
+	<select id="memoryList" resultType="memory">
+		SELECT A.*, B.jpname AS placeName
+		FROM memory A, place B
+		WHERE A.place=B.pnum
+		ORDER BY startdate DESC
+	</select>
+	<select id="memoryListForPage" parameterType="map" resultType="memory">
+		<![CDATA[
+		SELECT * FROM
+		(
+			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, A.*, B.jpname AS placeName
+			FROM memory A, place B, (SELECT @ROWNUM:=0) R
+			WHERE A.place=B.pnum
+			ORDER BY startdate DESC
+		) R
+		WHERE rnum >= #{start} AND rnum <= #{last};
+		]]>
+	</select>
+	<select id="memoryImgListForPage" resultType="memoryImg">
+		SELECT * FROM memoryImg WHERE
+		<foreach collection="list" item="item" separator="OR">
+		idx = #{item.idx}
+		</foreach>
+	</select>
+</mapper>

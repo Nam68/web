@@ -11,14 +11,6 @@
 <link href="css/header.css" rel="stylesheet">
 </head>
 <body>
-<script>
-window.onload = function() {
-	var scrollPosition = $('#pageStartPoint').offset().top;
-	$('html, body').animate({
-        scrollTop: scrollPosition
-  	}, 200);
-}
-</script>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <section class="container">
   <div class="px-4 py-5 my-5 text-center">

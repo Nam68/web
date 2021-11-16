@@ -18,7 +18,8 @@ public class UserController {
 	private UserService us;
 	
 	@RequestMapping("/login.do")
-	public String login() {
+	public String login(HttpSession session) {
+		session.setAttribute("header", "user");
 		return "user/login";
 	}
 	
@@ -38,9 +39,9 @@ public class UserController {
 		return 1;
 	}
 	
-	
 	@RequestMapping("/signup.do")
-	public String signup() {
+	public String signup(HttpSession session) {
+		session.setAttribute("header", "user");
 		return "user/signup";
 	}
 	

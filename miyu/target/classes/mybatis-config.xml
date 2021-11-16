@@ -5,8 +5,11 @@
 <configuration>
   <typeAliases>
 	<typeAlias type="miyu.user.model.UserDTO" alias="user"/>
+	<typeAlias type="miyu.memory.model.MemoryDTO" alias="memory"/>	
+	<typeAlias type="miyu.memory.model.MemoryImgDTO" alias="memoryImg"/>	
   </typeAliases>
   <mappers>
 	<mapper resource="sql/userSQL.xml"/>
+	<mapper resource="sql/memorySQL.xml"/>
   </mappers>
 </configuration>

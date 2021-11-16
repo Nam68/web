@@ -19,12 +19,16 @@
 	
 	<!-- DAOs -->
 	<bean id="userDao" class="miyu.user.model.UserDAOImple"></bean>
+	<bean id="memoryDao" class="miyu.memory.model.MemoryDAOImple"></bean>
 
 	<!-- Service -->
 	<bean id="userService" class="miyu.user.service.UserServiceImple"></bean>
+	<bean id="memoryService" class="miyu.memory.service.MemoryServiceImple"></bean>
 
 	<!-- views & apps -->
-	
+	<bean id="pageManagement" class="miyu.app.PageManagement"></bean>
+	<bean id="fileManagement" class="miyu.app.FileManagement"></bean>
+		
 	<!-- json -->
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 		<property name="contentType" value="application/json;charset=UTF-8"></property>

@@ -3,6 +3,7 @@ package miyu.controller;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class IndexController {
 		
 		DecimalFormat df = new DecimalFormat("###,###");
 		session.setAttribute("period", df.format(period));
+		
+		session.setAttribute("header", "home");
 		
 		return "index";
 	}
