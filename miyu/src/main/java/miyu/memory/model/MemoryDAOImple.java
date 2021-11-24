@@ -18,19 +18,17 @@ public class MemoryDAOImple implements MemoryDAO {
 	public List memoryList() {
 		return sql.selectList("memoryList");
 	}
-	
-	public List memoryListForPage(Map map) {
-		return sql.selectList("memoryListForPage", map);
-	}
 
 	public MemoryDTO memorySelect(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return sql.selectOne("memorySelect", idx);
 	}
 
 	public List memoryImgList(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return sql.selectList("memoryImgList", idx);
+	}
+	
+	public List memoryListForPage(Map map) {
+		return sql.selectList("memoryListForPage", map);
 	}
 	
 	public List memoryImgListForPage(List list) {
@@ -43,8 +41,7 @@ public class MemoryDAOImple implements MemoryDAO {
 	}
 
 	public int memoryDelete(int idx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sql.delete("memoryDelete", idx);
 	}
 
 	public int memoryUpdate(Map map) {

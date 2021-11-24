@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import miyu.memory.service.MemoryService;
 
@@ -37,6 +38,19 @@ public class MemoryController {
 		return mav;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/memoryContent.do", produces = "application/json; charset=utf-8")
+	public String memoryContent(int idx) {
+		ObjectMapper mapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = mapper.writeValueAsString(ms.memorySelect(idx));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+	
 	@RequestMapping(value = "/tmpMemoryImgAdd.do", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String tmpMemoryImgAdd(MultipartFile[] files) {
@@ -54,6 +68,12 @@ public class MemoryController {
 	@RequestMapping("/memoryAdd.do")
 	public String memoryAdd() {
 		return "memory/memoryAdd";
+	}
+	
+	@RequestMapping("/memoryDelete.do")
+	@ResponseBody
+	public int memoryDelete(int idx) {
+		return ms.memoryDelete(idx);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package miyu.memory.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +17,7 @@ public interface MemoryService {
 	
 	public List memoryList();
 	public List memoryListForPage(int cp, int count);
-	public MemoryDTO memorySelect(int idx);
-	public List memoryImgList(int idx);
+	public Map memorySelect(int idx);
 	
 	public int memoryAdd(MemoryDTO dto, MemoryImgDTO idto);
 	public int memoryDelete(int idx);

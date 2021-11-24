@@ -8,9 +8,9 @@ public interface MemoryDAO {
 	public int memoryCount();
 	
 	public List memoryList();
-	public List memoryListForPage(Map map);
 	public MemoryDTO memorySelect(int idx);
 	public List memoryImgList(int idx);
+	public List memoryListForPage(Map map);
 	public List memoryImgListForPage(List list);
 	
 	public int memoryAdd(Map map);

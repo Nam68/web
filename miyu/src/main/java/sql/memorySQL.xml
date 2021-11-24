@@ -12,6 +12,12 @@
 		WHERE A.place=B.pnum
 		ORDER BY startdate DESC
 	</select>
+	<select id="memorySelect" parameterType="int" resultType="memory">
+		SELECT * FROM memory WHERE idx = #{idx}
+	</select>
+	<select id="memoryImgList" parameterType="int" resultType="memoryImg">
+		SELECT * FROM memoryImg WHERE idx = #{idx}
+	</select>
 	<select id="memoryListForPage" parameterType="map" resultType="memory">
 		<![CDATA[
 		SELECT * FROM
@@ -30,4 +36,9 @@
 		idx = #{item.idx}
 		</foreach>
 	</select>
+	
+	<delete id="memoryDelete" parameterType="int">
+		DELETE FROM memory WHERE idx = #{idx};
+		DELETE FROM memoryImg WHERE idx = #{idx};
+	</delete>
 </mapper>

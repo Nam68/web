@@ -47,14 +47,11 @@ public class MemoryServiceImple implements MemoryService {
 		return list;
 	}
 
-	public MemoryDTO memorySelect(int idx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List memoryImgList(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map memorySelect(int idx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memory", dao.memorySelect(idx));
+		map.put("imgs", dao.memoryImgList(idx));
+		return map;
 	}
 
 	public int memoryAdd(MemoryDTO dto, MemoryImgDTO idto) {
@@ -63,8 +60,7 @@ public class MemoryServiceImple implements MemoryService {
 	}
 
 	public int memoryDelete(int idx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.memoryDelete(idx);
 	}
 
 	public int memoryUpdate(MemoryDTO dto, MemoryImgDTO idto) {

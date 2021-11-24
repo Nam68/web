@@ -64,29 +64,38 @@ function memoryAddCode() { //이미지 삽입 버튼 코드를 반환
 	return code;
 }
 
-function memoryImgCode(img) {
+function memoryImgCode(img, count) {
+	var carouselClass = '';
+	if(count==0) {
+		carouselClass = 'carousel-item active';
+	} else {
+		carouselClass = 'carousel-item';
+	}
 	var code = 
-		'<div class="carousel-item" role="button" id="addMemoryButton">'+
-			'<img src="'+img+'" class="d-block w-100" alt="...">'+
-			'<div class="carousel-caption d-none d-md-block">'+
-				'<h5>Click Here To Add Picture</h5>'+
-	            '<p>Let\'s add pictures and comments of our memory!</p>'+
-			'</div>'+
-		'</div>'+
-		'<script>'+
-			'$(\'#addMemoryButton\').on(\'click\', function() {'+
-				'$(\'#addImageInput\').trigger(\'click\');'+
-			'});'+
-		'<\/script>';
+		'<div class="'+carouselClass+'">'+
+			'<img src="'+img+'" class="d-block w-100" width="400" height="300" alt="...">'+
+		'</div>';
+	return code;
+}
+
+function memoryContentIdx(idx) {
+	var code = '<input type="hidden" id="memoryContentIdx" value="'+idx+'">';
 	return code;
 }
 
 function memoryContentfooter() {
 	var code = ''+
-	<c:if test="${!empty sessionScope.userDTO}">
-		'<button type="button" class="btn btn-outline-danger">Delete</button>'+
-		'<button type="button" class="btn btn-outline-success">Update</button>'+
-		//각 버튼별로 script 만들기
+	<c:if test="${sessionScope.userDTO.permit==2}">
+		'<button type="button" class="btn btn-outline-danger memoryContentDelete">Delete</button>'+
+		'<button type="button" class="btn btn-outline-success memoryContentUpdate">Update</button>'+
+		'<script>'+
+			'$(\'.memoryContentDelete\').on(\'click\', function() {'+
+				'memoryContentDelete();'+
+			'});'+
+			'$(\'.memoryContentUpdate\').on(\'click\', function() {'+
+				'memoryContentUpdate();'+
+			'});'+
+		'<\/script>'+
 	</c:if>
 		'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	return code;
@@ -98,6 +107,31 @@ function memoryAddfooter() {
 		'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	return code;
 }
+
+function memoryContentDelete() {
+	var idx = $('#memoryContentIdx').val();
+	if(window.confirm('削除すると復元できません！\n削除しますか？')) {
+		$.ajax({
+			url: 'memoryDelete.do',
+			data: {idx: idx},
+			success: function(data) {
+				if(data > 0) {
+					window.alert('削除しました');
+					location.href='memoryList.do';
+				} else {
+					window.alert('削除に失敗しました\n管理者にお問い合わせください');
+				}
+			}
+		})
+		.fail(function() {
+			window.alert('request failed!');
+		});
+	}
+}
+
+function memoryContentUpdate() {
+	window.alert('update');
+}
 </script>
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
@@ -105,7 +139,7 @@ function memoryAddfooter() {
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Memory</h1>
     <hr>
-    <!-- c:if test="${sessionScope.userDTO.permit==2 }" -->
+    <c:if test="${sessionScope.userDTO.permit==2 }">
     <div class="text-end mb-3">
   	  <a class="btn btn-outline-danger mb-1" role="button" data-bs-toggle="modal" data-bs-target="#memoryContentModal">
 	    Add New Memory
@@ -118,11 +152,11 @@ function memoryAddfooter() {
 	  	});
 	  </script>
 	</div>
-	<!-- /c:if -->
+	</c:if>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <c:forEach items="${list }" var="m">
       <div class="col">
-        <div class="card shadow-sm overflow-hidden position-relative" role="button">
+        <div class="card shadow-sm overflow-hidden position-relative" role="button" data-bs-toggle="modal" data-bs-target="#memoryContentModal">
           <span><input type="hidden" value="${m.idx }"></span>
           <span class="w-100 text-center text-white fs-4 fw-bold title">${m.title }</span>
           <span class="w-100 text-center text-white fs-5 city">${m.placeName }</span>
@@ -137,15 +171,17 @@ function memoryAddfooter() {
       	$('.card').on('click', function() {
       		var idx = $(this).find('input').val();
       		$.ajax({
-      			url: 'test',
+      			url: 'memoryContent.do',
       			data: {idx: idx},
       			success: function(data) {
-      				$('#memoryContentModalLabel').html(data.title);
-      				var imgs = data.img;
+      				$('#memoryContentModalLabel').html(data.memory.title);
+      				$('#memoryContent').html(data.memory.content);
+      				$('#memoryContent').append(memoryContentIdx(data.memory.idx));
+      				var imgs = data.imgs;
       				for(var i = 0; i < imgs.length; i++) {
-      					$('.carousel-inner').append(memoryImgCode(imgs[i]));
-      					$('#memoryContentModalFooter').html(memoryContentfooter());
+      					$('#memory-carousel-inner').append(memoryImgCode(imgs[i].img, i));
       				}
+  					$('#memoryContentModalFooter').html(memoryContentfooter());
       			}
       		})
       		.fail(function() {
@@ -179,15 +215,12 @@ function memoryAddfooter() {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="memoryContentModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close memoryContentModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body container" id="memoryContentModalContent">
         <div class="row">
 	      <div class="col-5">
 			<div id="carouselCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-touch="false" data-bs-interval="false">
-			  <div class="carousel-indicators">
-			    <span><button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button></span>
-			  </div>
 			  <div class="carousel-inner" id="memory-carousel-inner">
 			  	Image Code
 			  </div>
@@ -201,19 +234,24 @@ function memoryAddfooter() {
 			  </button>
 			</div>
 	      </div>
-	      <div class="col-6">
+	      <div class="col-6" id="memoryContent">
 	        Column
 	      </div>
 	    </div>
       </div>
       <div class="modal-footer" id="memoryContentModalFooter">
         <button type="button" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary memoryContentModalClose" data-bs-dismiss="modal">Close</button>
+        <script>
+        	$('.memoryContentModalClose').on('click', function() {
+        		$('#memoryContentModalLabel').html('');
+        		$('#memory-carousel-inner').html('');
+        	});
+        </script>
       </div>
     </div>
   </div>
 </div>
-
 
 <form id="memoryImgAddForm" method="post" enctype="multipart/form-data">
   <input type="file" id="addImageInput" multiple="multiple" accept="image/*" style="display: none;">
