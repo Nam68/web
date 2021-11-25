@@ -1,8 +1,11 @@
 package miyu.app;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +48,29 @@ public class FileManagement {
 		}
 	}
 	
+	private int copyFile(File originFile, File newFile) {
+		try {
+			FileInputStream fis = new FileInputStream(originFile);
+			FileOutputStream fos = new FileOutputStream(newFile);
+			
+			byte[] buf = new byte[1024]; //한번에 가져올 데이터 양을 설정
+			
+			int readData;
+			while((readData = fis.read(buf)) > 0) {
+				fos.write(buf, 0, readData);
+			}
+			
+			fis.close();
+			fos.close();
+			
+			return 1;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+	}
+	
 
 	
 	
@@ -66,6 +92,22 @@ public class FileManagement {
 			if(file.isFile()) list.add(DB_PATH + file.getName());
 		}
 		return list;
+	}
+	
+	public int tmpMemoryImgCopy(List<String> list) {
+		File temp = getTempFolder();
+		for(String imgRoot : list) {
+			String name = imgRoot.substring(imgRoot.lastIndexOf("/")+1); //파일 이름 가져오기
+			
+			File target = new File(SERVER_PATH + name); //실제 파일 위치
+			if(target.exists()) {
+				File tempFile = new File(temp.getPath()+"/"+name); //임시파일 생성
+				int check = copyFile(target, tempFile); //파일 복사
+				
+				if(check == -1) return check; //복사시 오류가 뜨면 오류반환
+			}
+		}
+		return 1;
 	}
 	
 }

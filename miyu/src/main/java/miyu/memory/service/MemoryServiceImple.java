@@ -1,5 +1,6 @@
 package miyu.memory.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,13 @@ public class MemoryServiceImple implements MemoryService {
 	public List tmpMemoryImgAdd(MultipartFile[] files) {
 		f.tempFileAdd(files);
 		return f.getTempDbPath();
+	}
+	
+	public int tmpMemoryImgCopy(int idx) {
+		List<MemoryImgDTO> list = dao.memoryImgList(idx);
+		List<String> imgs = new ArrayList<String>();
+		for(MemoryImgDTO dto : list) imgs.add(dto.getImg());
+		return f.tmpMemoryImgCopy(imgs);
 	}
 	
 	public String memoryPageCode(int cp, int count) {

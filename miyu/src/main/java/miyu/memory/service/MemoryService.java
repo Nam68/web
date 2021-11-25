@@ -24,6 +24,7 @@ public interface MemoryService {
 	public int memoryUpdate(MemoryDTO dto, MemoryImgDTO idto);
 	
 	public List tmpMemoryImgAdd(MultipartFile[] files);
+	public int tmpMemoryImgCopy(int idx);
 	
 	public String memoryPageCode(int cp, int count);
 	

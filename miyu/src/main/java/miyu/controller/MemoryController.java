@@ -51,18 +51,10 @@ public class MemoryController {
 		return json;
 	}
 	
-	@RequestMapping(value = "/tmpMemoryImgAdd.do", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
+	@RequestMapping(value = "/tmpMemoryImgAdd.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String tmpMemoryImgAdd(MultipartFile[] files) {
-		List list = ms.tmpMemoryImgAdd(files);
-		ObjectMapper mapper = new ObjectMapper();
-		String data = ""; 
-		try {
-			data = mapper.writeValueAsString(list);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return data;
+	public List<String> tmpMemoryImgAdd(MultipartFile[] files) {
+		return ms.tmpMemoryImgAdd(files);
 	}
 	
 	@RequestMapping("/memoryAdd.do")
@@ -74,6 +66,12 @@ public class MemoryController {
 	@ResponseBody
 	public int memoryDelete(int idx) {
 		return ms.memoryDelete(idx);
+	}
+	
+	@RequestMapping(value = "/memoryUpdate.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int memoryUpdate(int idx) {
+		return ms.tmpMemoryImgCopy(idx);
 	}
 	
 }

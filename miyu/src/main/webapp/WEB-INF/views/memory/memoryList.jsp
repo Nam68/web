@@ -130,11 +130,26 @@ function memoryContentDelete() { //컨텐츠 삭제 스크립트(javascript로 �
 	}
 }
 function memoryContentUpdate() { //컨텐츠 업데이트 스크립트(javascript로 버튼을 추가하기 때문에 따로 빼놓음)
-	$('#memoryUpdateModalLabel').val($('#memoryContentModalLabel').html());
-	$('#update-carousel-inner').html($('#memory-carousel-inner').html());
-	$('#update-carousel-inner').append(memoryAddButton());
-	$('#memoryUpdateContentTextarea').html($('#memoryContent').html());
-	$('#memoryUpdateModalOn').trigger('click');
+	var idx = $('#memoryContentIdx').val();
+	$.ajax({ //이미지 파일을 temp폴더에 올려놓기 위한 작업
+		url: 'memoryUpdate.do',
+		method: 'GET',
+		data: {idx: idx},
+		success: function(data) {
+			if(data > 0) { //성공적으로 temp파일에 복사가 된 경우 실행
+				$('#memoryUpdateModalLabel').val($('#memoryContentModalLabel').html());
+				$('#update-carousel-inner').html($('#memory-carousel-inner').html());
+				$('#update-carousel-inner').append(memoryAddButton());
+				$('#memoryUpdateContentTextarea').html($('#memoryContent').html());
+				$('#memoryUpdateModalOn').trigger('click');	
+			} else { //temp파일에 복사가 되지 않은 경우 -1이 출력됨
+				window.alert('request failed!');
+			}
+		}
+	})
+	.fail(function() {
+    	window.alert('request failed!');
+    });
 }
 
 
@@ -420,19 +435,22 @@ $('#addImageInput').on('change', function() {
 	var form = $('memoryImgAddForm')[0];
 	var formData = new FormData(form);
 	window.alert('add Image Check');
-	/*
+	
 	$.ajax({
-		url: '',
+		url: 'tmpMemoryImgAdd.do',
 		type: 'POST',
 		enctype: 'multipart/form-data',
-		data: data,
+		data: formData,
 		processData: false,
 		contentType: false,
 		success: function(data) {
-			alert(data);
+			window.alert(data);
 		}
+	})
+	.fail(function() {
+		window.alert('request failed!');
 	});
-	*/
+	
 });
 </script>
 </body>
