@@ -13,18 +13,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <link href="css/header.css" rel="stylesheet">
 <link href="css/memory.css" rel="stylesheet">
-<style>
-.carousel-item>img {
-	width: 400px;
-	height: 300px;
-}
-@media screen and (max-width:700px), screen and (orientation:portrait) {
-	.col-5 {
-		width: 100%;
-		margin-bottom: 10%;
-	}
-}
-</style>
 </head>
 <script>
 function initPage() { //페이지 초기화시 실행 (실행 코드는 헤더에 있음)

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    
+
+<!-- ******* 부트스트랩 아이콘 모음 ******* -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
     <title>Bootstrap</title>
@@ -21,62 +22,72 @@
     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
   </symbol>
-  <symbol id="grid" viewBox="0 0 16 16">
-    <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
-  </symbol>
   <symbol id="memory" viewBox="0 0 16 16">
   	<path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/><path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
   </symbol>
+  <symbol id="trip" viewBox="0 0 16 16">
+  	<path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/><path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
+  </symbol>
+  <symbol id="request" viewBox="0 0 16 16">
+    <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z"/><path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>
+  </symbol>
 </svg>
 
-  <header>
-    <div class="px-3 py-2 bg-dark text-white">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="index.do" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstra2p"/></svg>
-            <img alt="titleImg" src="http://epoche02.cafe24.com/img/title_light.png" class="bi me-2" width="150" height="60">
-          </a>
+<!-- 헤더 시작위치 -->
+<header>
+  <div class="px-3 py-2 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="index.do" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstra2p"/></svg>
+          <img alt="titleImg" src="http://epoche02.cafe24.com/img/title_light.png" class="bi me-2" width="150" height="60">
+        </a>
 
-          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            <li>
-              <a href="index.do" class="nav-link ${sessionScope.header == 'home'? 'text-primary':'text-white' }">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="memoryList.do" class="nav-link ${sessionScope.header == 'memory'? 'text-primary':'text-white' }">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journals d-block mx-auto mb-1"><use xlink:href="#memory"/></svg>
-                Memory
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link ${sessionScope.header == 'product'? 'text-primary':'text-white' }">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
-                Products
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link ${sessionScope.header == 'user'? 'text-primary':'text-white' }">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
-                Customers
-              </a>
-            </li>
-          </ul>
-          <div class="text-end align-middle">
-            <c:if test="${empty sessionScope.userDTO }">
-	          <ul class="nav">
-	            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Log in</a></li>
-	            <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
-	          </ul>
-	        </c:if>
-	        <c:if test="${!empty sessionScope.userDTO }">
-	          <ul class="nav">
-	            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Hello, ${sessionScope.userDTO.username }! </a></li>
-	            <li class="nav-item" id="navLogout"><a role="button" class="nav-link link-light px-2"> Log out</a></li>
-	          </ul>
-	          <script>
+        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+          <li>
+            <a href="index.do" class="nav-link ${sessionScope.header == 'home'? 'text-primary':'text-white' }">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="memoryList.do" class="nav-link ${sessionScope.header == 'memory'? 'text-primary':'text-white' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journals d-block mx-auto mb-1"><use xlink:href="#memory"/></svg>
+              Memory
+            </a>
+          </li>
+          <li>
+            <a href="tripMainPage.do" class="nav-link ${sessionScope.header == 'trip'? 'text-primary':'text-white' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journals d-block mx-auto mb-1"><use xlink:href="#trip"/></svg>
+              Trip
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link ${sessionScope.header == 'request'? 'text-primary':'text-white' }">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#request"/></svg>
+              Request
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link ${sessionScope.header == 'user'? 'text-primary':'text-white' }">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+              User Menu
+            </a>
+          </li>
+        </ul>
+        <div class="text-end align-middle">
+          <c:if test="${empty sessionScope.userDTO }">
+          <ul class="nav">
+            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Log in</a></li>
+	        <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
+	      </ul>
+	      </c:if>
+          <c:if test="${!empty sessionScope.userDTO }">
+	      <ul class="nav">
+	        <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Hello, ${sessionScope.userDTO.username }! </a></li>
+	        <li class="nav-item" id="navLogout"><a role="button" class="nav-link link-light px-2"> Log out</a></li>
+	      </ul>
+			<script>
 	          	$('#navLogout').on('click', function() {
 	          		$('#confirmModalLabel').html('Log out');
 	          		$('#confirmModalContent').html('Are you sure?');
@@ -103,21 +114,26 @@
 	          		});
 	          		$('#confirmModalOn').trigger('click');
 	          	});
-	          </script>
-	        </c:if>
-          </div>
+			</script>
+	      </c:if>
         </div>
       </div>
     </div>
-  </header>
-  
+  </div>
+</header>
+<!-- 헤더 끝 -->
+
+<!-- 상단 공통이미지 -->
+<section>
 <div class="labelDiv">
 	<label>今までの${sessionScope.period}日<br>これからもよろしく</label>
 </div>
 <div class="imgDiv">
 	<img alt="mainImg" src="http://epoche02.cafe24.com/img/mainImg.JPG" class="mainImg">
 </div>
+</section>
 
+<!-- 각 메뉴의 시작위치 지정(공통이미지 아래) -->
 <a id="pageStartPoint"></a>
 <script>
 window.onload = function() {
