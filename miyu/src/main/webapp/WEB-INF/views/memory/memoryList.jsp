@@ -32,7 +32,7 @@ function initPage() { //페이지 초기화시 실행 (실행 코드는 헤더�
 	      img.style.cssText = 'width: auto; height: 100%; margin-left: ' + marginLeft + 'px;';
 	    } else {
 	      // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
-	      img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+		      img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
 	    }
 	}
 }
@@ -66,9 +66,10 @@ function memoryContentIdx(idx) { //모달창이 현재 어떤 idx로 컨텐츠�
 	return code;
 }
 function memoryContentFooter() { //컨텐츠를 띄울 때 버튼창
-	var code = ''+
-	<c:if test="${sessionScope.userDTO.permit==2}"> //관리자 계정이라면 update와 delete 버튼을 추가함
-		'<button type="button" class="btn btn-outline-danger memoryContentDelete">Delete</button>'+
+	var permit = ${sessionScope.userDTO.permit};
+	var code = '';
+	if(permit == 2) {
+		code += '<button type="button" class="btn btn-outline-danger memoryContentDelete">Delete</button>'+
 		'<button type="button" class="btn btn-outline-success memoryContentUpdate">Update</button>'+
 		'<script>'+
 			'$(\'.memoryContentDelete\').on(\'click\', function() {'+
@@ -77,9 +78,9 @@ function memoryContentFooter() { //컨텐츠를 띄울 때 버튼창
 			'$(\'.memoryContentUpdate\').on(\'click\', function() {'+
 				'memoryContentUpdate();'+ //업데이트 버튼을 클릭하면 해당 메서드 수행
 			'});'+
-		'<\/script>'+
-	</c:if>
-		'<button type="button" class="btn btn-secondary memoryContentModalClose" data-bs-dismiss="modal">Close</button>';
+		'<\/script>';
+	}
+		code += '<button type="button" class="btn btn-secondary memoryContentModalClose" data-bs-dismiss="modal">Close</button>';
 	return code+memoryFooterScript();
 }
 function memoryFooterScript() { //닫기 버튼을 클릭했을 때 모달창을 초기화해주는 코드

@@ -4,12 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <typeAliases>
-	<typeAlias type="miyu.user.model.UserDTO" alias="user"/>
 	<typeAlias type="miyu.memory.model.MemoryDTO" alias="memory"/>	
 	<typeAlias type="miyu.memory.model.MemoryImgDTO" alias="memoryImg"/>	
+	<typeAlias type="miyu.trip.model.PlaceDTO" alias="place"/>	
+	<typeAlias type="miyu.user.model.UserDTO" alias="user"/>
   </typeAliases>
   <mappers>
-	<mapper resource="sql/userSQL.xml"/>
 	<mapper resource="sql/memorySQL.xml"/>
+	<mapper resource="sql/tripSQL.xml"/>
+	<mapper resource="sql/userSQL.xml"/>
   </mappers>
 </configuration>

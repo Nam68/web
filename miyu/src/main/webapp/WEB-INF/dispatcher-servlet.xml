@@ -20,10 +20,12 @@
 	<!-- DAOs -->
 	<bean id="userDao" class="miyu.user.model.UserDAOImple"></bean>
 	<bean id="memoryDao" class="miyu.memory.model.MemoryDAOImple"></bean>
+	<bean id="tripDao" class="miyu.trip.model.TripDAOImple"></bean>
 
 	<!-- Service -->
 	<bean id="userService" class="miyu.user.service.UserServiceImple"></bean>
 	<bean id="memoryService" class="miyu.memory.service.MemoryServiceImple"></bean>
+	<bean id="tripService" class="miyu.trip.service.TripServicecImple"></bean>
 
 	<!-- views & apps -->
 	<bean id="pageManagement" class="miyu.app.PageManagement"></bean>

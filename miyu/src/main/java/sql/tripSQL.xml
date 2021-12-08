@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miyu.trip">
+	<select id="selectPlaceForKor" parameterType="string" resultType="place">
+		SELECT * FROM place WHERE kpname = #{region}
+	</select>
+	<select id="selectPlaceForJpn" parameterType="string" resultType="place">
+		SELECT * FROM place WHERE jpname = #{region}
+	</select>
+	<select id="selectPlaceForEng" parameterType="string" resultType="place">
+		SELECT * FROM place WHERE pname = #{region}
+	</select>
+</mapper>

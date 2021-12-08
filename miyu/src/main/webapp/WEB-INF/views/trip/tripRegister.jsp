@@ -46,7 +46,7 @@ function initMap() {
   
   const input = document.getElementById("pac-input");
   const options = {
-		    fields: ["formatted_address", "geometry", "name"],
+		    fields: ["formatted_address", "geometry", "name", "address_components"],
 		    strictBounds: false,
 		    types: ["establishment"],
 		  };
@@ -73,6 +73,7 @@ function initMap() {
 	    if (!place.geometry || !place.geometry.location) {
 	      // User entered the name of a Place that was not suggested and
 	      // pressed the Enter key, or the Place Details request failed.
+	      //엔터가 눌리면 이쪽으로 넘어옴. 나중에 개선 필요.
 	      window.alert("No details available for input: '" + place.name + "'");
 	      return;
 	    }
@@ -84,7 +85,8 @@ function initMap() {
 	      map.setCenter(place.geometry.location);
 	      map.setZoom(17);
 	    }
-
+		
+	    // 지도에 이름과 간단한 정보를 출력하는 코드
 	    marker.setPosition(place.geometry.location);
 	    marker.setVisible(true);
 	    infowindowContent.children["place-name"].textContent = place.name;
@@ -97,19 +99,32 @@ function initMap() {
 	    var lat = place.geometry.location.lat();
 	    var lng = place.geometry.location.lng();
 	    
-	    regionPicker(addr);
+	    var addr_json = place.address_components; //주소값이 분할되어 담겨 있는 JSON
+	    var region = ''; //지역명 저장 변수
+	    // 주소 JSON을 뒤에서부터 거꾸로 돌려서 지역명이 들어 있는 구간을 찾아내어 region에 저장하는 코드
+	    for(var i = addr_json.length-1; i >= 0; i--) {
+	    	if(addr_json[i].types[0] == 'administrative_area_level_1') {
+	    		region = addr_json[i].short_name;
+	    	}
+	    }
+	    
+	    // 만약 JSON에 지역명이 있는 구간이 없을 경우 직접입력을 요청하는 코드
+	    if(region == '') {
+	    	// 드롭다운 메뉴를 추가해서 대응 (기존 메뉴를 드롭다운으로 변경 후 잠금을 해제?)
+	    }
+	    
+	    regionPicker(region);
 	  });
 }
 
-function regionPicker(addr) {
+function regionPicker(region) {
 	$.ajax({
 		url: 'regionPick.do',
-		data: addr,
+		data: {region: region},
 		success: function(data) {
-			window.alert(data.pidx); //데이터는 번호와 이름을 같이 반환
-			window.alert(data.name); //데이터는 번호와 이름을 같이 반환
-			
-			$('#region-input').val(data.name);
+			window.alert(data);
+			window.alert(JSON.stringify(data.dto.pname)); //DTO를 데이터로 받아옴
+			$('#region-input').val(data.dto.pname);
 		}
 	})
 	.fail(function() {
