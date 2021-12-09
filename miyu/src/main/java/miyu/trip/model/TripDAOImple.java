@@ -12,14 +12,13 @@ public class TripDAOImple implements TripDAO {
 	
 	public PlaceDTO selectPlace(String region) {
 		PlaceDTO dto = sql.selectOne("selectPlaceForKor", region);
-		if(dto == null) sql.selectOne("selectPlaceForJpn", region);
-		if(dto == null) sql.selectOne("selectPlaceForEng", region);
+		if(dto == null) dto = sql.selectOne("selectPlaceForJpn", region);
+		if(dto == null) dto = sql.selectOne("selectPlaceForEng", region);
 		return dto;
 	}
 
 	public List listPlace() {
-		// TODO Auto-generated method stub
-		return null;
+		return sql.selectList("listPlace");
 	}
 
 }

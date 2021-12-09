@@ -12,4 +12,7 @@
 	<select id="selectPlaceForEng" parameterType="string" resultType="place">
 		SELECT * FROM place WHERE pname = #{region}
 	</select>
+	<select id="listPlace" resultType="place">
+		SELECT * FROM place
+	</select>
 </mapper>

@@ -37,6 +37,12 @@
         <button type="button" class="btn btn-primary btn-lg px-4 gap-3" id="loginButton">Log In</button>
         <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="index.do" role="button">Return</a>
         <script>
+        	$(window).on('keydown', function(e) {
+        		if(e.keyCode == 13) {
+        			$('#loginButton').trigger('click');
+        		}
+        	});
+        	
         	$('#loginButton').on('click', function() {
         		$.ajax({
         			url: 'login.do',
@@ -47,6 +53,13 @@
 	  						$('#resultModalLabel').html('Log in Success');
 	  						$('#resultModalContent').html('Welcome!!');
 	  						$('#resultModalButton').attr('href', 'index.do');
+	  						
+	  						// 사용자가 버튼을 누르지 않고 엔터키를 누를 경우 메인으로 이동
+	  						$(window).on('keydown', function(e) {
+	  			        		if(e.keyCode == 13) {
+	  			        			location.href = 'index.do';
+	  			        		}
+	  			        	});
 	  					} else {
 	  						$('#resultModalLabel').html('Log in failed');
 	  						$('#resultModalContent').html('Please check you ID and Password');
