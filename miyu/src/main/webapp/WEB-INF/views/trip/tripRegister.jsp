@@ -179,7 +179,7 @@ function regionPicker(region) {
     <div class="mt-5 mx-auto row gap-5">
       <div id="map" class="rounded col w-100"></div>
       <div id="input-form" class="col w-100 text-start">
-      <form name="form" action="">
+      <form name="form">
 		<div class="mb-3">
 		  <label for="pac-input" class="form-label">Place Search</label>
 		  <input id="pac-input" class="form-control" name="name" type="text" placeholder="Search...">
@@ -269,13 +269,18 @@ function regionPicker(region) {
 		<div class="mb-3 text-center">
   		  <div class="d-grid gap-2 d-md-block">
 		    <button id="form-submit" class="btn btn-primary" type="button">Save</button>
-		    <button class="btn btn-outline-danger" type="reset">Reset</button>
+		    <button class="btn btn-danger" type="reset">Reset</button>
+		    <button class="btn btn-outline-secondary" type="button">Cancel</button>
 		    <script>
-		    	$('.btn-outline-danger').on('click', () => {
+		    	$('.btn-danger').on('click', () => {
 		    		map.setCenter({ lat: 38, lng: 133 });
 		    		map.setZoom(5);
 		    		infowindow.close(); // 마커 정보창 초기화
 		    		marker.setVisible(false); // 마커 초기화
+		    	});
+		    	
+		    	$('.btn-outline-secondary').on('click', () => {
+		    		location.href = 'tripMainPage.do';
 		    	});
 		    	
 		    	$('#form-submit').on('click', () => {
@@ -288,7 +293,37 @@ function regionPicker(region) {
 		    			return;
 		    		}
 		    		
-		    		$('form[name="form"]').submit();
+		    		var queryString = $('form[name="form"]').serialize() ;
+		    		$.ajax({
+		    			url: 'addTrip.do',
+		    			data: queryString,
+		    			method: 'POST',
+		    			success: function(data) {
+		    				if(data > 0) {
+			    				$('#resultModalLabel').html('Complete!!');
+			    				$('#resultModalContent').html('新しい旅行プランが登録されました');
+			    				$('#resultModalButton').on('click', () => {
+			    					location.reload();
+			    				});
+			    				$('#resultModalOn').trigger('click');
+		    				} else {
+		    					$('#resultModalLabel').html('Failed');
+			    				$('#resultModalContent').html('登録できません！<br>管理者にお問い合わせください');
+			    				$('#resultModalButton').on('click', () => {
+			    					$('.btn-close').trigger('click');	
+			    				});
+			    				$('#resultModalOn').trigger('click');
+		    				}
+		    			}
+		    		})
+		    		.fail(function() {
+		    			$('#resultModalLabel').html('Failed');
+	    				$('#resultModalContent').html('登録できません！<br>管理者にお問い合わせください');
+	    				$('#resultModalButton').on('click', () => {
+	    					$('.btn-close').trigger('click');	
+	    				});
+	    				$('#resultModalOn').trigger('click');
+		    		});
 		    	});
 		    </script>
 		  </div>
