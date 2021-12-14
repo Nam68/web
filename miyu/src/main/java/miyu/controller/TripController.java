@@ -70,6 +70,7 @@ public class TripController {
 		} else {
 			session.setAttribute("header", "trip");
 			mav.addObject("place", ts.placeList());
+			if(cp != 1) mav.addObject("scroll_animation_cancel", true);
 			mav.addObject("placesave", ts.placesaveListForPage(cp));
 			mav.addObject("page", ts.tripPageCode(cp));
 			mav.setViewName("trip/tripList");

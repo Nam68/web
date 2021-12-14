@@ -33,6 +33,7 @@ public class MemoryController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", ms.memoryListForPage(cp, count));
 		mav.addObject("page", ms.memoryPageCode(cp, count));
+		if(cp != 1) mav.addObject("scroll_animation_cancel", true);
 		mav.addObject("cp", cp);
 		mav.setViewName("memory/memoryList");
 		return mav;

@@ -137,11 +137,20 @@
 <a id="pageStartPoint"></a>
 <script>
 window.onload = function() {
-	<c:if test="${sessionScope.header=='home'}">return;</c:if>
 	var scrollPosition = $('#pageStartPoint').offset().top;
-	$('html, body').animate({
-        scrollTop: scrollPosition
-  	}, 200);
+	
+	// Home인 경우 스크롤 취소
+	<c:if test="${sessionScope.header=='home'}">return;</c:if>
+	
+	// 스크롤이 필요 없는 경우 스크롤 취소
+	<c:if test="${!empty scroll_cancel}">return;</c:if>
+	
+	// 스크롤 트랜지션이 필요 없는 경우 애니메이션 취소
+	<c:if test="${!empty scroll_animation_cancel}">$('html, body').scrollTop(scrollPosition); return;</c:if>
+	
+	setTimeout(function() {
+		$('html, body').animate({scrollTop: scrollPosition}, 500);
+	}, 200);
 	
 	initPage(); //혹시 onload가 필요할 땐 initPage() 메서드를 각 jsp 페이지에 만들어서 실행할 것
 }

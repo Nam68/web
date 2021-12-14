@@ -40,7 +40,15 @@
 	  </table>
     </div>
     <div class="mt-5 mx-auto col-9 row gap-5">
-    ${page } <!-- 페이지 코드 다시 확인;; -->
+    ${page }
+    </div>
+    <div>
+    	<button id="testButton">ddd</button>
+    	<script>
+    	$('#testButton').click(function() {
+    		window.scrollTo(0, 0);
+    	});
+    	</script>
     </div>
   </div>
 </section>
