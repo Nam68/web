@@ -1,6 +1,6 @@
 package miyu.user.model;
 
-import java.util.Map;
+import java.sql.Date;
 
 public interface UserDAO {
 	
@@ -9,7 +9,7 @@ public interface UserDAO {
 	public UserDTO signin(UserDTO dto);
 	public int updatePermit(int useridx, int permit);
 	
-	public int updateAutoSignin(Map map);
+	public int updateAutoSignin(String sessionId, Date sessionAge, int useridx);
 	public UserDTO autoSingin(String sessionId);
 	
 }

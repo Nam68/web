@@ -32,7 +32,7 @@ public class UserController {
 	public int signin(UserDTO dto, boolean check, HttpSession session, HttpServletResponse resp) {
 		UserDTO user = us.signin(dto);
 		session.setAttribute("userDTO", user);
-		System.out.println(check);
+	
 		// check되어 있다면 로그인용 쿠키를 생성
 		if(user != null && check != false) us.setSigninCookie(resp, dto.getUseridx(), session.getId());
 				
@@ -42,13 +42,12 @@ public class UserController {
 	
 	@RequestMapping("/signout.do")
 	@ResponseBody
-	public int signout(HttpSession session, HttpServletRequest req) {
+	public int signout(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		// 세션 초기와
 		session.invalidate();
 		
 		// 자동 로그인을 하지 않을 것이므로 쿠키도 초기화
-		Cookie cookie = WebUtils.getCookie(req, "autoSign");
-		if(cookie != null) cookie.setMaxAge(0);
+		us.deleteSigninCookie(resp, req);
 		return 1;
 	}
 	

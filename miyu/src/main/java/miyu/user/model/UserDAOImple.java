@@ -1,5 +1,7 @@
 package miyu.user.model;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,7 +29,11 @@ public class UserDAOImple implements UserDAO {
 		return 0;
 	}
 	
-	public int updateAutoSignin(Map map) {
+	public int updateAutoSignin(String sessionId, Date sessionAge, int useridx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sessionId", sessionId);
+		map.put("sessionAge", sessionAge);
+		map.put("useridx", useridx);
 		return sql.update("updateAutoSignin", map);
 	}
 	

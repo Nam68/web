@@ -68,8 +68,13 @@
 	
 	    <div class="checkbox mb-3">
 	      <label>
-	        <input type="checkbox" value="true" id="rememberInfo"> Remember me
+	        <input type="checkbox" value="true" id="rememberInfo" data-bs-toggle="collapse" data-bs-target="#signin-collapse" aria-expanded="false" aria-controls="signin-collapse"> Remember me
 	      </label>
+	      <div class="collapse" id="signin-collapse">
+		    <div class="card card-body">
+		      保安の問題が発生するので公共場所の機器や他人の機器では使用しないでください
+		    </div>
+		  </div>
 	    </div>
 	    <button class="w-100 btn btn-lg btn-primary" type="button" id="signinButton">Sign in</button>
 	    <p class="mt-5 mb-3 text-muted">&copy; 2021~</p>

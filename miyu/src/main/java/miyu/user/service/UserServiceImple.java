@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.util.WebUtils;
 
 import miyu.user.model.UserDAO;
 import miyu.user.model.UserDTO;
@@ -47,11 +50,23 @@ public class UserServiceImple implements UserService {
 		
 		// DB에 쿠키정보를 저장
 		Date sessionAge = new Date(System.currentTimeMillis() + (1000 * age));
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("sessionId", sessionId);
-		map.put("sessionAge", sessionAge);
-		map.put("useridx", useridx);
-		dao.updateAutoSignin(map);
+		dao.updateAutoSignin(sessionId, sessionAge, useridx);
+	}
+	
+	public void deleteSigninCookie(HttpServletResponse resp, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		UserDTO dto = (UserDTO) session.getAttribute("userDTO");
+		
+		Cookie cookie = WebUtils.getCookie(req, "autoSignin");
+		if(cookie != null) {
+			cookie.setMaxAge(0);
+			cookie.setPath("/");
+			resp.addCookie(cookie);
+			
+			Date now = new Date(System.currentTimeMillis());
+			dao.updateAutoSignin(session.getId(), now, dto.getUseridx());
+		}
+		
 	}
 	
 	public UserDTO autoSignin(String sessionId) {
