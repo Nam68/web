@@ -1,5 +1,6 @@
 package miyu.memory.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,10 @@ public class MemoryDAOImple implements MemoryDAO {
 		return sql.selectList("memoryImgList", idx);
 	}
 	
-	public List memoryListForPage(Map map) {
+	public List memoryListForPage(int start, int last) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("last", last);
 		return sql.selectList("memoryListForPage", map);
 	}
 	
@@ -44,7 +48,7 @@ public class MemoryDAOImple implements MemoryDAO {
 		return sql.delete("memoryDelete", idx);
 	}
 
-	public int memoryUpdate(Map map) {
+	public int memoryUpdate(MemoryDTO dto) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

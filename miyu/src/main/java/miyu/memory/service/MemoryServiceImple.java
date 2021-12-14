@@ -34,11 +34,9 @@ public class MemoryServiceImple implements MemoryService {
 	}
 	
 	public List memoryListForPage(int cp, int count) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("start", p.startList(cp, LIST_SIZE));
-		map.put("last", p.lastList(cp, count, LIST_SIZE));
 		
-		List<MemoryDTO> list = dao.memoryListForPage(map);
+		
+		List<MemoryDTO> list = dao.memoryListForPage(p.startList(cp, LIST_SIZE), p.lastList(cp, count, LIST_SIZE));
 		List<MemoryImgDTO> imgs = dao.memoryImgListForPage(list);
 		
 		Map<Integer, MemoryImgDTO> imgMap = new HashMap<Integer, MemoryImgDTO>();

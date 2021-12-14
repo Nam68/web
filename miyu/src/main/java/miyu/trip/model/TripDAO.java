@@ -11,7 +11,7 @@ public interface TripDAO {
 	
 	/*** placesaveDTO 관련 메서드 ***/
 	public int placesaveCount();
-	public List placesaveListForPage(Map<String, Integer> map);
+	public List placesaveListForPage(int start, int last);
 	public PlacesaveDTO placesaveSelect(int pidx);
 	public int placesaveAdd(PlacesaveDTO dto);
 	

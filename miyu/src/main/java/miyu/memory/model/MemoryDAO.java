@@ -10,11 +10,11 @@ public interface MemoryDAO {
 	public List memoryList();
 	public MemoryDTO memorySelect(int idx);
 	public List memoryImgList(int idx);
-	public List memoryListForPage(Map map);
+	public List memoryListForPage(int start, int last);
 	public List memoryImgListForPage(List list);
 	
 	public int memoryAdd(Map map);
 	public int memoryDelete(int idx);
-	public int memoryUpdate(Map map);
+	public int memoryUpdate(MemoryDTO dto);
 	
 }

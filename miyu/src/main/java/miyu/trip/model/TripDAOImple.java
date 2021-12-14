@@ -1,5 +1,6 @@
 package miyu.trip.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,10 @@ public class TripDAOImple implements TripDAO {
 		return sql.selectOne("placesaveCount");
 	}
 	
-	public List placesaveListForPage(Map<String, Integer> map) {
+	public List placesaveListForPage(int start, int last) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("last", last);
 		return sql.selectList("placesaveListForPage", map);
 	}
 	

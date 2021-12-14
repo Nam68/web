@@ -39,10 +39,7 @@ public class TripServicecImple implements TripService {
 	/*** placesaveDTO 관련 메서드 ***/
 	
 	public List placesaveListForPage(int cp) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("start", p.startList(cp, LIST_SIZE));
-		map.put("last", p.lastList(cp, dao.placesaveCount(), LIST_SIZE));
-		return dao.placesaveListForPage(map);
+		return dao.placesaveListForPage(p.startList(cp, LIST_SIZE), p.lastList(cp, dao.placesaveCount(), LIST_SIZE));
 	}
 	
 	public PlacesaveDTO placesaveSelect(int pidx) {
