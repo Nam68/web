@@ -1,5 +1,6 @@
 package miyu.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,13 @@ public class UserController {
 	
 	@RequestMapping(value = "/signin.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int signin(UserDTO dto, HttpSession session) {
-		UserDTO user = us.login(dto);
+	public int signin(UserDTO dto, boolean check, HttpSession session, HttpServletResponse resp) {
+		UserDTO user = us.signin(dto);
 		session.setAttribute("userDTO", user);
+		System.out.println(check);
+		// check되어 있다면 로그인용 쿠키를 생성
+		if(user != null && check != false) us.setSigninCookie(resp, dto.getUseridx(), session.getId());
+				
 		int count = user == null? 0:1;
 		return count;
 	}

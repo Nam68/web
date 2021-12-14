@@ -30,6 +30,12 @@
 	<!-- views & apps -->
 	<bean id="pageManagement" class="miyu.app.PageManagement"></bean>
 	<bean id="fileManagement" class="miyu.app.FileManagement"></bean>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="authenticationInterceptor" class="miyu.app.AuthenticationInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 		
 	<!-- json -->
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">

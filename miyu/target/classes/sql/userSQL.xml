@@ -14,4 +14,14 @@
 		INSERT INTO user
 		VALUES(get_seq('user'), #{userid}, #{userpwd}, #{username}, 0, NOW())
 	</insert>
+	
+	<!-- 쿠키 관련 SQL -->
+	<update id="updateAutoSignin" parameterType="map">
+		UPDATE user
+		SET sessionKey = #{sessionId}, sessionLimit = #{sessionAge}
+		WHERE useridx = #{useridx}
+	</update>
+	<select id="autoSignin" parameterType="string" resultType="user">
+		SELECT * FROM user WHERE sessionKey = #{sessionId}
+	</select>
 </mapper>

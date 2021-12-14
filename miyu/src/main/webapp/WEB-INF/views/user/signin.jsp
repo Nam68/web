@@ -96,6 +96,7 @@
 	  					$('#resultModalLabel').html('Sign in Success');
 	  					$('#resultModalContent').html('Welcome!!');
 	  					$('#resultModalButton').attr('href', 'index.do');
+	  					$('#resultModalButton').removeAttr('data-bs-dismiss');
 	  				
 	  					// 사용자가 버튼을 누르지 않고 엔터키를 누를 경우 메인으로 이동
 	  					$(window).on('keydown', function(e) {
@@ -104,11 +105,10 @@
 	  		       			}
 	  		       		});
 	  				} else {
-	  					window.alert($('#signinPassword').val());
 	  					$('#resultModalLabel').html('Sign in failed');
 	  					$('#resultModalContent').html('Please check you ID and Password');
 	  					$('#resultModalButton').attr('data-bs-dismiss', 'modal');
-	  					window.alert('hi4');
+	  					$('#resultModalButton').removeAttr('href');
 	  				}
 	  				$('#resultModalOn').trigger('click');
         		}
