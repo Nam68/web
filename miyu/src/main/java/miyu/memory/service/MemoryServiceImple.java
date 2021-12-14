@@ -82,7 +82,7 @@ public class MemoryServiceImple implements MemoryService {
 	}
 	
 	public String memoryPageCode(int cp, int count) {
-		return p.paginationCode(cp, count, PAGE_SIZE, LIST_SIZE);
+		return p.paginationCode(cp, count, PAGE_SIZE, LIST_SIZE, COMMAND);
 	}
 
 }

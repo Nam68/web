@@ -30,7 +30,7 @@ public class PageManagement {
 		return last;
 	}
 	
-	public String paginationCode(int cp, int count, int pageSize, int listSize) {
+	public String paginationCode(int cp, int count, int pageSize, int listSize, String command) {
 		String previous = startPage(cp, pageSize)<=1? " disabled":"";
 		String next = pageGroup(count, listSize)==lastPage(cp, count, pageSize, listSize)? " disabled":"";
 		StringBuffer page = new StringBuffer();
@@ -39,13 +39,13 @@ public class PageManagement {
 			if(i == cp) {
 				page.append("active");
 			}
-			page.append("\"><a class=\"page-link\" href=\"memoryList.do?cp="+i+"\">"+i+"</a></li>");
+			page.append("\"><a class=\"page-link\" href=\""+command+"?cp="+i+"\">"+i+"</a></li>");
 		}
 		
 		String code = "<nav aria-label=\"Page navigation example\">"
 		+ "  <ul class=\"pagination\">"
 		+ "    <li class=\"page-item"+previous+"\">"
-		+ "      <a class=\"page-link\" href=\"memoryList.do?cp="+(startPage(cp, pageSize)-pageSize)+"\" aria-label=\"Previous\">"
+		+ "      <a class=\"page-link\" href=\""+command+"?cp="+(startPage(cp, pageSize)-pageSize)+"\" aria-label=\"Previous\">"
 		+ "        <span aria-hidden=\"true\">&laquo;</span>"
 		+ "      </a>"
 		+ "    </li>"
@@ -53,7 +53,7 @@ public class PageManagement {
 		+ page.toString()
 		
 		+ "    <li class=\"page-item"+next+"\">"
-		+ "      <a class=\"page-link\" href=\"memoryList.do?cp="+(lastPage(cp, count, pageSize, listSize)+1)+"\" aria-label=\"Next\">"
+		+ "      <a class=\"page-link\" href=\""+command+"?cp="+(lastPage(cp, count, pageSize, listSize)+1)+"\" aria-label=\"Next\">"
 		+ "        <span aria-hidden=\"true\">&raquo;</span>"
 		+ "      </a>"
 		+ "    </li>"

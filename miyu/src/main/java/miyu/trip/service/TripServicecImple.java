@@ -58,7 +58,7 @@ public class TripServicecImple implements TripService {
 	/*** placesaveDTO 관련 메서드 ***/
 	
 	public String tripPageCode(int cp) {
-		return p.paginationCode(cp, dao.placesaveCount(), PAGE_SIZE, LIST_SIZE);
+		return p.paginationCode(cp, dao.placesaveCount(), PAGE_SIZE, LIST_SIZE, COMMAND);
 	}
 	
 }
