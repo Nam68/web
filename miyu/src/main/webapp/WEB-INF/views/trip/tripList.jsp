@@ -29,7 +29,7 @@
 	    </thead>
 	    <tbody>
 	      <c:forEach items="${placesave }" var="ps">
-	      <tr role="button">
+	      <tr class="placesave" role="button">
 	        <th scope="row">${ps.pidx }</th>
 	        <td class="text-start ps-5">${ps.name }</td>
 	        <td>${ps.place }</td>
@@ -42,11 +42,25 @@
     <div class="mt-5 mx-auto col-9 row gap-5">
     ${page }
     </div>
-    <div>
-    	<button id="testButton">ddd</button>
-    	<script>
-    	$('#testButton').click(function() {
-    		window.scrollTo(0, 0);
+    <div class="mt-5 mx-auto col-9 row gap-5">
+      <div class="d-grid gap-2 d-md-block">
+	    <button class="btn btn-outline-secondary" type="button">Return</button>
+	  </div>    	
+	  <script>
+	  	$('.placesave').on('click', function() {
+	  		var pidx = $('.placesave').find('[scope="row"]').html();
+	  		
+	  		const form = $('<form></form>');
+	  		form.attr('method', 'post');
+	  		form.attr('action', 'tripContent.do');
+	  		
+	  		form.append($('<input/>', {type: 'hidden', name: 'pidx', value:pidx }));
+	  		
+	  		form.appendTo('body');
+	  		form.submit();
+	  	});
+    	$('.btn-outline-secondary').on('click', function() {
+    		location.href = 'tripMainPage.do';
     	});
     	</script>
     </div>

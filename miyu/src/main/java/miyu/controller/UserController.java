@@ -17,24 +17,24 @@ public class UserController {
 	@Autowired
 	private UserService us;
 	
-	@RequestMapping("/login.do")
-	public String login(HttpSession session) {
+	@RequestMapping("/signin.do")
+	public String signin(HttpSession session) {
 		session.setAttribute("header", "user");
-		return "user/login";
+		return "user/signin";
 	}
 	
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/signin.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int login(UserDTO dto, HttpSession session) {
+	public int signin(UserDTO dto, HttpSession session) {
 		UserDTO user = us.login(dto);
 		session.setAttribute("userDTO", user);
 		int count = user == null? 0:1;
 		return count;
 	}
 	
-	@RequestMapping("/logout.do")
+	@RequestMapping("/signout.do")
 	@ResponseBody
-	public int logout(HttpSession session) {
+	public int signout(HttpSession session) {
 		session.invalidate();
 		return 1;
 	}

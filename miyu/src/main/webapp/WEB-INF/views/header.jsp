@@ -43,7 +43,7 @@
           <img alt="titleImg" src="http://epoche02.cafe24.com/img/title_light.png" class="bi me-2" width="150" height="60">
         </a>
 
-        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 text-small">
           <li>
             <a href="index.do" class="nav-link ${sessionScope.header == 'home'? 'text-primary':'text-white' }">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
@@ -75,33 +75,30 @@
             </a>
           </li>
         </ul>
-        <div class="text-end align-middle">
+        
+        <div class="col-md-3 text-end">
           <c:if test="${empty sessionScope.userDTO }">
-          <ul class="nav">
-            <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Log in</a></li>
-	        <li class="nav-item"><a href="signup.do" class="nav-link link-light px-2">Sign up</a></li>
-	      </ul>
-	      </c:if>
+            <a href="signin.do" class="px-2 text-white text-decoration-none">Sign in</a>
+            <a href="signup.do" class="px-2 text-white text-decoration-none">Sign up</a>
+          </c:if>
           <c:if test="${!empty sessionScope.userDTO }">
-	      <ul class="nav">
-	        <li class="nav-item"><a href="login.do" class="nav-link link-light px-2">Hello, ${sessionScope.userDTO.username }! </a></li>
-	        <li class="nav-item" id="navLogout"><a role="button" class="nav-link link-light px-2"> Log out</a></li>
-	      </ul>
+	        <a href="signin.do" class="px-2 text-white text-decoration-none">Hello, ${sessionScope.userDTO.username }! </a>
+	        <a role="button" class="px-2 text-white text-decoration-none" id="navSignout"> Sign out</a>
 			<script>
-	          	$('#navLogout').on('click', function() {
-	          		$('#confirmModalLabel').html('Log out');
+	          	$('#navSignout').on('click', function() {
+	          		$('#confirmModalLabel').html('Sign out');
 	          		$('#confirmModalContent').html('Are you sure?');
 	          		$('#confirmModalSubmitButton').on('click', function() {
 	          			$.ajax({
-	          				url: 'logout.do',
+	          				url: 'signout.do',
 	          				success: function(data) {
 	          					if(data > 0) {
-	          						$('#resultModalLabel').html('Log out success');
+	          						$('#resultModalLabel').html('Sign out success');
 	          						$('#resultModalContent').html('See you later!');
 	          						$('#resultModalButton').attr('href', 'index.do');
 	          						$('#resultModalOn').trigger('click');
 	          					} else {
-	          						$('#resultModalLabel').html('Log out failed');
+	          						$('#resultModalLabel').html('Sing out failed');
 	          						$('#resultModalContent').html('There is something wrong with our server...');
 	          						$('#resultModalButton').attr('data-bs-dismiss', 'modal');
 	          						$('#resultModalOn').trigger('click');
