@@ -1,5 +1,7 @@
 package miyu.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import miyu.user.model.UserDTO;
 import miyu.user.service.UserService;
@@ -39,8 +42,13 @@ public class UserController {
 	
 	@RequestMapping("/signout.do")
 	@ResponseBody
-	public int signout(HttpSession session) {
+	public int signout(HttpSession session, HttpServletRequest req) {
+		// 세션 초기와
 		session.invalidate();
+		
+		// 자동 로그인을 하지 않을 것이므로 쿠키도 초기화
+		Cookie cookie = WebUtils.getCookie(req, "autoSign");
+		if(cookie != null) cookie.setMaxAge(0);
 		return 1;
 	}
 	
