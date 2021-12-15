@@ -169,5 +169,13 @@
 		    <artifactId>spring-tx</artifactId>
 		    <version>4.3.2.RELEASE</version>
 		</dependency>
+		
+		<!-- AOP -->
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.5</version>
+		</dependency>
   </dependencies>
 </project>

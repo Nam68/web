@@ -39,10 +39,10 @@
 	    </tbody>
 	  </table>
     </div>
-    <div class="mt-5 mx-auto col-9 row gap-5">
+    <div class="d-grid justify-content-sm-center mt-2">
     ${page }
     </div>
-    <div class="mt-5 mx-auto col-9 row gap-5">
+    <div class="mx-auto col-9 row gap-5 position-relative">
       <div class="d-grid gap-2 d-md-block">
 	    <button class="btn btn-outline-secondary" type="button">Return</button>
 	  </div>    	

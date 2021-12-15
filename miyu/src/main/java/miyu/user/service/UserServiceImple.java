@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import miyu.user.model.UserDAO;
@@ -71,6 +72,23 @@ public class UserServiceImple implements UserService {
 	
 	public UserDTO autoSignin(String sessionId) {
 		return dao.autoSingin(sessionId);
+	}
+	
+	
+	
+	/*** 관리자 계정인지 체크 ***/
+	public boolean adminCheck(HttpSession session, ModelAndView mav) {
+		UserDTO dto = (UserDTO) session.getAttribute("userDTO");
+		
+		if(dto == null || dto.getPermit() != 2) {
+			mav.addObject("title", "Trip Page");
+			mav.addObject("href", "index.do");
+			mav.addObject("msg", "管理者のみ閲覧できます\\nAdministrator Only");
+			mav.setViewName("global");
+			return false;
+		}
+		
+		return true;
 	}
 
 }

@@ -43,11 +43,11 @@ public class UserController {
 	@RequestMapping("/signout.do")
 	@ResponseBody
 	public int signout(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		// 자동 로그인을 하지 않을 것이므로 쿠키 초기화
+		us.deleteSigninCookie(resp, req);
+		
 		// 세션 초기와
 		session.invalidate();
-		
-		// 자동 로그인을 하지 않을 것이므로 쿠키도 초기화
-		us.deleteSigninCookie(resp, req);
 		return 1;
 	}
 	

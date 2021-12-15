@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import miyu.trip.model.PlacesaveDTO;
 import miyu.trip.service.TripService;
 import miyu.user.model.UserDTO;
+import miyu.user.service.UserService;
 
 @Controller
 public class TripController {
@@ -22,17 +23,13 @@ public class TripController {
 	@Autowired
 	private TripService ts;
 	
+	@Autowired
+	private UserService us;
+	
 	@RequestMapping("/tripMainPage.do")
 	public ModelAndView tripMainPage(HttpSession session) {
-		UserDTO user = (UserDTO) session.getAttribute("userDTO");
-		
 		ModelAndView mav = new ModelAndView();
-		if(user == null || user.getPermit() != 2) {
-			mav.addObject("title", "Trip Page");
-			mav.addObject("href", "index.do");
-			mav.addObject("msg", "管理者のみ閲覧できます\\nAdministrator Only");
-			mav.setViewName("global");
-		} else {
+		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
 			mav.setViewName("trip/tripMainPage");
 		}
@@ -41,15 +38,8 @@ public class TripController {
 	
 	@RequestMapping("/tripRegister.do")
 	public ModelAndView tripRegister(HttpSession session) {
-		UserDTO user = (UserDTO) session.getAttribute("userDTO");
-		
 		ModelAndView mav = new ModelAndView();
-		if(user == null || user.getPermit() != 2) {
-			mav.addObject("title", "Trip Page");
-			mav.addObject("href", "index.do");
-			mav.addObject("msg", "管理者のみ閲覧できます\\nAdministrator Only");
-			mav.setViewName("global");
-		} else {
+		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
 			mav.addObject("place", ts.placeList());
 			mav.setViewName("trip/tripRegister");
@@ -59,21 +49,25 @@ public class TripController {
 	
 	@RequestMapping("/tripList.do")
 	public ModelAndView tripList(HttpSession session, @RequestParam(defaultValue = "1")int cp) {
-		UserDTO user = (UserDTO) session.getAttribute("userDTO");
-		
 		ModelAndView mav = new ModelAndView();
-		if(user == null || user.getPermit() != 2) {
-			mav.addObject("title", "Trip Page");
-			mav.addObject("href", "index.do");
-			mav.addObject("msg", "管理者のみ閲覧できます\\nAdministrator Only");
-			mav.setViewName("global");
-		} else {
+		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
 			mav.addObject("place", ts.placeList());
 			if(cp != 1) mav.addObject("scroll_animation_cancel", true);
 			mav.addObject("placesave", ts.placesaveListForPage(cp));
 			mav.addObject("page", ts.tripPageCode(cp));
 			mav.setViewName("trip/tripList");
+		}
+		return mav;
+	}
+	
+	@RequestMapping("/tripcontent.do")
+	public ModelAndView tripContent(HttpSession session, int pidx) {
+		ModelAndView mav = new ModelAndView();
+		if(us.adminCheck(session, mav)) {
+			session.setAttribute("header", "trip");
+			mav.addObject("placesave", ts.placesaveSelect(pidx));
+			mav.setViewName("trip/tripContent");
 		}
 		return mav;
 	}
