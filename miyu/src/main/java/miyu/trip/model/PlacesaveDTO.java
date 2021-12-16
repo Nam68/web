@@ -10,6 +10,8 @@ public class PlacesaveDTO {
 	private String memo;
 	private double lat;
 	private double lng;
+	private String jpname;
+	private String activityText;
 	
 	
 	public PlacesaveDTO() {
@@ -17,7 +19,7 @@ public class PlacesaveDTO {
 	}
 	
 	public PlacesaveDTO(int pidx, String name, int place, int activity, String addr, String memo, double lat,
-			double lng) {
+			double lng, String jpname, String activityText) {
 		super();
 		this.pidx = pidx;
 		this.name = name;
@@ -27,6 +29,8 @@ public class PlacesaveDTO {
 		this.memo = memo;
 		this.lat = lat;
 		this.lng = lng;
+		this.jpname = jpname;
+		this.activityText = activityText;
 	}
 
 	public int getPidx() {
@@ -91,6 +95,22 @@ public class PlacesaveDTO {
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	public String getJpname() {
+		return jpname;
+	}
+
+	public void setJpname(String jpname) {
+		this.jpname = jpname;
+	}
+
+	public String getActivityText() {
+		return activityText;
+	}
+
+	public void setActivityText(String activityText) {
+		this.activityText = activityText;
 	}	
 	
 }

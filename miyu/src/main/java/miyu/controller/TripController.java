@@ -37,11 +37,12 @@ public class TripController {
 	}
 	
 	@RequestMapping("/tripRegister.do")
-	public ModelAndView tripRegister(HttpSession session) {
+	public ModelAndView tripRegister(HttpSession session, @RequestParam(defaultValue = "0")int pidx) {
 		ModelAndView mav = new ModelAndView();
 		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
 			mav.addObject("place", ts.placeList());
+			if(pidx != 0) mav.addObject("placesave", ts.placesaveSelect(pidx));
 			mav.setViewName("trip/tripRegister");
 		}
 		return mav;

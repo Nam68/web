@@ -18,33 +18,17 @@
 .form-select {display: none; }
 </style>
 <script>
-function initPage() {
-	contentSizeCheck();
-}
-$(window).resize(function() {
-	contentSizeCheck();
-});
-function contentSizeCheck() {
-	var width = $(window).width();
-	var height = $(window).height();
-	var portrait = width-height < 0? true:false;
-	
-	if(portrait) {
-		$('#map').removeClass('col');
-		$('#input-form').removeClass('col');
-	} else {
-		$('#map').addClass('col');
-		$('#input-form').addClass('col');
-	}
-}
-
 let map;
 let infowindow;
+let infowindowContent;
 let marker;
 function initMap() {
+	var lat = ${empty placesave? 38:placesave.lat};
+	var lng = ${empty placesave? 133:placesave.lng};
+	
 	// 맵 초기화 코드
   	map = new google.maps.Map(document.getElementById("map"), {
-    	center: { lat: 38, lng: 133 },
+    	center: { lat: lat, lng: lng },
     	zoom: 5,
     	mapTypeControl: false,
   	});
@@ -60,7 +44,7 @@ function initMap() {
   
   	// 마커 초기화 코드
   	infowindow = new google.maps.InfoWindow(); // 마커에 정보를 보여주는 역할
-  	const infowindowContent = document.getElementById("infowindow-content");
+  	infowindowContent = document.getElementById("infowindow-content");
   	infowindow.setContent(infowindowContent);
   	marker = new google.maps.Marker({ //실제 마커
 	    	map,
@@ -95,7 +79,7 @@ function initMap() {
 	        			};
 	        		service.getDetails(request, (place, status) => { // 상세정보 검색 요청
 	        			if (status == google.maps.places.PlacesServiceStatus.OK) {
-	        				createMarker(place, marker, infowindow, infowindowContent); //검색이 완료된 경우 마커 요청
+	        				createMarker(place); //검색이 완료된 경우 마커 요청
 	        				inputPlaceInfo(place); // 검색이 완료된 경우 입력칸에 장소정보 표시
 	        			} else { // place id로 상세정보가 검색되지 않는 경우
 	    	        		window.alert('場所が検索できません！\n正確な検索語を入力してください\nメニューにて選択すると正確な検索結果が現れます');
@@ -107,19 +91,19 @@ function initMap() {
 	      	});
 	    }
 	    
-	    createMarker(place, marker, infowindow, infowindowContent);
+	    createMarker(place);
 	    inputPlaceInfo(place);
 	    
 	});
 }
 // 마커와 장소정보를 보여주는 메서드
-function createMarker(place, marker, infowindow, infowindowContent) {
+function createMarker(place) {
     // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);
+      map.setZoom(15);
     }
 	
     // 지도에 이름과 간단한 정보를 출력하는 코드
@@ -152,6 +136,7 @@ function inputPlaceInfo(place) {
     	const select = $('.form-select');
     	select.css('display', 'block');
     	select.find('[value="201"]').attr('selected', 'selected'); // pnum 201 = 해외
+    	$('#region-input').val($('select option:selected').text());
     }
     
     regionPicker(region);
@@ -171,6 +156,21 @@ function regionPicker(region) {
 	});
 }
 </script>
+
+<c:if test="${!empty placesave}"> <!-- placesave가 있으면 이 메서드를 실행 -->
+<script>
+function initPage() {
+	const myLatLng = { lat: ${placesave.lat}, lng: ${placesave.lng} };
+	map.setCenter(myLatLng);
+    map.setZoom(13);
+    marker.setPosition(myLatLng);
+    marker.setVisible(true);
+    infowindowContent.children["place-name"].textContent = '${placesave.name}';
+    infowindowContent.children["place-address"].textContent = '${placesave.addr}';
+    infowindow.open(map, marker);
+}
+</script>
+</c:if>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
@@ -179,12 +179,12 @@ function regionPicker(region) {
     <h1 class="display-5 fw-bold mb-5">Register Trip</h1>
     <hr> 
     <div class="mt-5 mx-auto row gap-5">
-      <div id="map" class="rounded col w-100"></div>
-      <div id="input-form" class="col w-100 text-start">
+      <div id="map" class="rounded col-sm"></div>
+      <div id="input-form" class="col-sm text-start">
       <form name="form">
 		<div class="mb-3">
 		  <label for="pac-input" class="form-label">Place Search</label>
-		  <input id="pac-input" class="form-control" name="name" type="text" placeholder="Search...">
+		  <input id="pac-input" class="form-control" name="name" value="${placesave.name }" type="text" placeholder="Search...">
 		    <div id="infowindow-content">
 		      <span id="place-name" class="title"></span><br />
 		      <span id="place-address"></span>
@@ -192,14 +192,19 @@ function regionPicker(region) {
 		</div>
 		<div class="mb-3">
 		  <label for="region-input" class="form-label">Region</label>
-		  <input id="region-input" class="form-control" type="text" placeholder="Please Write Place" readOnly>
+		  <input id="region-input" class="form-control" value="${placesave.jpname }" type="text" placeholder="Please Write Place" readOnly>
 		  <select class="form-select mt-2" name="place_select" aria-label="Region select">
 			<c:forEach items="${place }" var="p">
 			<option value="${p.pnum }">${p.jpname }</option>
 			</c:forEach>
 		  </select>
-		  <input id="region-number" name="place" type="hidden">
+		  <input id="region-number" name="place" value="${placesave.place }" type="hidden">
 		  <script>
+		  	$('select').on('change', function() {
+				$('#region-input').val($('select option:selected').text());
+				$('#region-number').val($('select').val());
+			});
+		  
 		  	$('#region-input').on('click', function() {
 		  		$('#pac-input').focus();
 		  	});
@@ -208,7 +213,7 @@ function regionPicker(region) {
 		<div class="mb-3">
 		  <label for="addr-input" class="form-label">Address</label>
 		  <div class="position-relative">
-		    <input id="addr-input" class="form-control" name="addr" type="text" readOnly placeholder="Please Write Place">
+		    <input id="addr-input" class="form-control" name="addr" value="${placesave.addr }" type="text" readOnly placeholder="Please Write Place">
 		    <div class="position-absolute top-50 end-0 translate-middle-y p-3">
 		      <svg id="addr-copy" role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16"><path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>		      
 		      <script>
@@ -252,7 +257,7 @@ function regionPicker(region) {
 			</div>
 			<script>
 		    	// 토스트 관련 코드
-				var toastTrigger = document.getElementById('plus_code-copy');
+				var toastTrigger = document.getElementById('addr-copy');
 				var toastLiveExample = document.getElementById('liveToast');
 				if (toastTrigger) {
 				  	toastTrigger.addEventListener('click', function () {
@@ -269,12 +274,14 @@ function regionPicker(region) {
 		</div>
 		<div class="mb-3">
 		  <label for="memo-input" class="form-label">Memo</label>
-		  <textarea id="memo-input" class="form-control" name="memo" rows="5"></textarea>
+		  <textarea id="memo-input" class="form-control" name="memo" rows="5">${placesave.memo }</textarea>
 		</div>
 		<div class="mb-3 text-center">
   		  <div class="d-grid gap-2 d-md-block">
 		    <button id="form-submit" class="btn btn-primary" type="button">Save</button>
+		    <c:if test="${empty placesave }">
 		    <button class="btn btn-danger" type="reset">Reset</button>
+		    </c:if>
 		    <button class="btn btn-outline-secondary" type="button">Cancel</button>
 		    <script>
 		    	$('.btn-danger').on('click', () => {
@@ -289,18 +296,16 @@ function regionPicker(region) {
 		    	});
 		    	
 		    	$('#form-submit').on('click', () => {
-		    		if($('#region-input').val() == '') {
-		    			$('#region-number').val($('.form-select').val());
-		    		}
 		    		
-		    		if($('#pac-input').val() == '' || $('#region-number').val() == '' || $('#plus_code-input').val() == '') {
+		    		if($('#pac-input').val() == '' || $('#region-number').val() == '' || $('#addr-input').val() == '') {
 		    			window.alert('場所を入力してください');
 		    			return;
 		    		}
 		    		
 		    		var queryString = $('form[name="form"]').serialize() ;
+		    		var url = '${empty placesave? 'addTrip.do':'updateTrip.do'}';
 		    		$.ajax({
-		    			url: 'addTrip.do',
+		    			url: url,
 		    			data: queryString,
 		    			method: 'POST',
 		    			success: function(data) {

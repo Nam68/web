@@ -26,15 +26,18 @@
 			SELECT *
 			FROM 
 				(
-				SELECT (@rownum:=@rownum+1) rnum, p.*
-				FROM placesave p, (SELECT @rownum:=0) r
+				SELECT (@rownum:=@rownum+1) rnum, ps.*, p.jpname, a.janame AS activityText
+				FROM placesave ps, place p, activity a, (SELECT @rownum:=0) r
+				WHERE ps.place = p.pnum AND ps.activity = a.anum
 				ORDER BY pidx DESC
 				) A
 			WHERE rnum >= #{start} AND rnum <= #{last}		
 		]]>
 	</select>
 	<select id="placesaveSelect" parameterType="int" resultType="placesave">
-		SELECT * FROM placesave WHERE pidx = #{pidx}
+		SELECT ps.*, p.jpname, a.janame AS activityText
+		FROM placesave ps, place p, activity a
+		WHERE pidx = #{pidx} AND ps.place = p.pnum AND ps.activity = a.anum
 	</select>
 	<insert id="placesaveAdd" parameterType="placesave">
 		<selectKey keyProperty="pidx" resultType="int" order="BEFORE">

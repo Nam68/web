@@ -18,12 +18,6 @@
 #infowindow-content .title {font-weight: bold; }
 #infowindow-content {display: none; }
 #map #infowindow-content {display: inline; }
-
-@media screen and (max-width:700px), screen and (orientation:portrait) {
-	#map {
-		margin: 0 auto;
-	}
-}
 </style>
 <script>
 let map;
@@ -77,23 +71,22 @@ function initPage() {
 	      <tr class="placesave" role="button">
 	        <th scope="row">${ps.pidx }</th>
 	        <td class="text-start ps-5">${ps.name }</td>
-	        <td>${ps.place }</td>
-	        <td>${ps.activity }</td>
+	        <td>${ps.jpname }</td>
+	        <td>${ps.activityText }</td>
 	      </tr>
 	      </c:forEach>
 	    </tbody>
 	  </table>
+	  <input type="hidden" id="selected_pidx">
     </div>
     <div class="mx-auto mt-2 col-9 position-relative">
     ${page }
     <button class="btn btn-outline-secondary position-absolute top-0 end-0" type="button">Return</button>
-    </div>
-      <div class="mx-auto col-9 d-grid gap-2 d-md-block" style="">
-	    
-	  </div>    	
+    </div>   	
 	  <script>
 	  	$('.placesave').on('click', function() {
 	  		var pidx = $(this).find('[scope="row"]').html();
+	  		$('#selected_pidx').val(pidx);
 	  		
 	  		$.ajax({
 	  			url: 'tripContent.do',
@@ -113,8 +106,8 @@ function initPage() {
 		    	    // 모달 생성 코드
 	  				$('#tripContentModalLabel').html(data.name);
 		    	    $('.name').html(data.name);
-		    	    $('.place').html(data.place);
-		    	    $('.activity').html(data.activity);
+		    	    $('.place').html(data.jpname);
+		    	    $('.activity').html(data.activityText);
 		    	    $('.addr').html(data.addr);
 		    	    $('.memo').html(data.memo);
 		    	    
@@ -163,6 +156,12 @@ function initPage() {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Changes</button>
+        <script>
+        	$('.btn-primary').on('click', () => {
+        		var pidx = $('#selected_pidx').val();
+        		location.href = 'tripRegister.do?pidx='+pidx;
+        	});
+        </script>
       </div>
     </div>
   </div>
