@@ -11,10 +11,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href="css/header.css" rel="stylesheet">
 <style>
-#map {height: 50vh; width: 50vh; }
+#map {height: 50vh; width: 100%; }
+#content {height: 50vh; width: 100%; }
+#content .memo {height: 22.5vh; overflow: auto; }
+#content .info {height: 27.5vh; overflow: hidden; }
 #infowindow-content .title {font-weight: bold; }
 #infowindow-content {display: none; }
 #map #infowindow-content {display: inline; }
+
+@media screen and (max-width:700px), screen and (orientation:portrait) {
+	#map {
+		margin: 0 auto;
+	}
+}
 </style>
 <script>
 let map;
@@ -37,6 +46,13 @@ function initMap() {
 	    	anchorPoint: new google.maps.Point(0, -29),
 	  	});
   	
+}
+function initPage() {
+	var portrait = ($(window).width() - $(window).height()) < 0;
+	if(portrait) {
+		$('table').find('tr:eq(0)').find('th:gt(1)').css('display', 'none');
+		$('table').find('tr:gt(0)').find('td:gt(0)').css('display', 'none');
+	}
 }
 </script>
 </head>
@@ -68,12 +84,12 @@ function initMap() {
 	    </tbody>
 	  </table>
     </div>
-    <div class="d-grid justify-content-sm-center mt-2">
+    <div class="mx-auto mt-2 col-9 position-relative">
     ${page }
+    <button class="btn btn-outline-secondary position-absolute top-0 end-0" type="button">Return</button>
     </div>
-    <div class="mx-auto col-9 row gap-5 position-relative">
-      <div class="d-grid gap-2 d-md-block">
-	    <button class="btn btn-outline-secondary" type="button">Return</button>
+      <div class="mx-auto col-9 d-grid gap-2 d-md-block" style="">
+	    
 	  </div>    	
 	  <script>
 	  	$('.placesave').on('click', function() {
@@ -83,25 +99,26 @@ function initMap() {
 	  			url: 'tripContent.do',
 	  			data: {pidx: pidx},
 	  			success: function(data) {
-	  				infowindow.close(); // 마커 정보창 초기화
-	  				marker.setVisible(false); // 마커 초기화
-	  				
+	  				// 맵 세팅 코드
+	  				infowindow.close();
+	  				marker.setVisible(false);
 	  				const myLatLng = { lat: data.lat, lng: data.lng };
-	  				
 	  				map.setCenter(myLatLng);
 		    	    map.setZoom(13);
-	  				
 		    	    marker.setPosition(myLatLng);
 		    	    marker.setVisible(true);
-		    	    
 		    	    infowindowContent.children["place-name"].textContent = data.name;
-		    	    
 		    	    infowindow.open(map, marker);
 	  				
+		    	    // 모달 생성 코드
 	  				$('#tripContentModalLabel').html(data.name);
+		    	    $('.name').html(data.name);
+		    	    $('.place').html(data.place);
+		    	    $('.activity').html(data.activity);
+		    	    $('.addr').html(data.addr);
+		    	    $('.memo').html(data.memo);
+		    	    
 	  				$('#tripContentModalButton').trigger('click');
-	  				
-	  				createMarker();
 	  			}
 	  		})
 	  		.fail(function() {
@@ -113,7 +130,6 @@ function initMap() {
     	});
     	</script>
     </div>
-  </div>
 </section>
 
 <!-- Button trigger modal -->
@@ -126,9 +142,23 @@ function initMap() {
         <h5 class="modal-title" id="tripContentModalLabel">Title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-      	<!-- 맵 관련 코드 -->
-        <div id="map"></div><div id="infowindow-content"><span id="place-name" class="title"></span></div>
+      <div class="modal-body row">
+      	<div class="col-sm">
+      	  <!-- 맵 관련 코드 -->
+          <div id="map"></div><div id="infowindow-content"><span id="place-name" class="title"></span></div>
+        </div>
+        <div class="col-sm">
+          <div id="content">
+          	<div class="info">
+	        <p class="h4 name"></p>
+	        <p class="place"></p>
+	        <p class="activity"></p>
+	        <p class="addr"></p>
+	        <hr>
+	        </div>
+	        <div class="memo"></div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

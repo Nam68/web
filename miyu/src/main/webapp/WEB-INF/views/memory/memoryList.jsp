@@ -31,8 +31,8 @@ function initPage() { //페이지 초기화시 실행 (실행 코드는 헤더�
 	      var marginLeft = -Math.round((imgWidthActual - imgWidthToBe) / 2);
 	      img.style.cssText = 'width: auto; height: 100%; margin-left: ' + marginLeft + 'px;';
 	    } else {
-	      // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
-		      img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+	      	// 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
+			img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
 	    }
 	}
 }
@@ -334,7 +334,7 @@ function memoryAddTitleGroup() {
 <!-- Content Modal -->
 <input type="hidden" id="memoryContentModalOn" role="button" data-bs-toggle="modal" data-bs-target="#memoryContentModal">
 <div class="modal fade" id="memoryContentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="memoryContentModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title fs-4 fw-bold" id="memoryContentModalLabel">Modal title</h5>
@@ -342,7 +342,7 @@ function memoryAddTitleGroup() {
       </div>
       <div class="modal-body container" id="memoryContentModalContent">
         <div class="row">
-	      <div class="col-5">
+	      <div class="col-sm">
 			<div id="carouselCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-touch="false" data-bs-interval="false">
 			  <div class="carousel-inner" id="memory-carousel-inner">
 			  	Image Code
@@ -357,7 +357,7 @@ function memoryAddTitleGroup() {
 			  </button>
 			</div>
 	      </div>
-	      <div class="col-6" id="memoryContent">
+	      <div class="col-sm" id="memoryContent">
 	        Column
 	      </div>
 	    </div>
@@ -372,7 +372,7 @@ function memoryAddTitleGroup() {
 <!-- Content Update Modal -->
 <input type="hidden" id="memoryUpdateModalOn" role="button" data-bs-toggle="modal" data-bs-target="#memoryUpdateModal">
 <div class="modal fade" id="memoryUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="memoryUpdateModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title fs-4 fw-bold"><input type="text" class="form-control" id="memoryUpdateModalLabel" placeholder="Example input placeholder"></h5>
@@ -380,7 +380,7 @@ function memoryAddTitleGroup() {
       </div>
       <div class="modal-body container" id="memoryUpdateModalContent">
         <div class="row">
-	      <div class="col-5">
+	      <div class="col-sm">
 			<div id="updateCarouselCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-touch="false" data-bs-interval="false">
 			  <div class="carousel-inner" id="update-carousel-inner">
 			  	Image Code
@@ -395,7 +395,7 @@ function memoryAddTitleGroup() {
 			  </button>
 			</div>
 	      </div>
-	      <div class="col-6" id="memoryUpdateContent">
+	      <div class="col-sm" id="memoryUpdateContent">
 	        <textarea class="form-control" id="memoryUpdateContentTextarea" rows="10"></textarea>
 	      </div>
 	    </div>

@@ -42,8 +42,8 @@ public class PageManagement {
 			page.append("\"><a class=\"page-link\" href=\""+command+"?cp="+i+"\">"+i+"</a></li>");
 		}
 		
-		String code = "<nav aria-label=\"Page navigation example\">"
-		+ "  <ul class=\"pagination\">"
+		String code = "<nav aria-label=\"Page navigation\">"
+		+ "  <ul class=\"pagination justify-content-center\">"
 		+ "    <li class=\"page-item"+previous+"\">"
 		+ "      <a class=\"page-link\" href=\""+command+"?cp="+(startPage(cp, pageSize)-pageSize)+"\" aria-label=\"Previous\">"
 		+ "        <span aria-hidden=\"true\">&laquo;</span>"

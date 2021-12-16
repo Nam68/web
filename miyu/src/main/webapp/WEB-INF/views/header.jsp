@@ -134,7 +134,13 @@
 <a id="pageStartPoint"></a>
 <script>
 window.onload = function() {
-	var scrollPosition = $('#pageStartPoint').offset().top;
+	var portrait = ($(window).width() - $(window).height()) < 0;
+	var scrollPosition;
+	if(portrait) {
+		scrollPosition = 0;
+	} else {
+		scrollPosition = $('#pageStartPoint').offset().top;
+	}
 	
 	// Home인 경우 스크롤 취소
 	<c:if test="${sessionScope.header=='home'}">return;</c:if>
