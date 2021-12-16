@@ -3,24 +3,30 @@ package miyu.trip.model;
 public class PlacesaveDTO {
 	
 	private int pidx;
-	private String pluscode;
+	private String name;
 	private int place;
 	private int activity;
-	private String name;
+	private String addr;
 	private String memo;
+	private double lat;
+	private double lng;
+	
 	
 	public PlacesaveDTO() {
 		
 	}
-
-	public PlacesaveDTO(int pidx, String pluscode, int place, int activity, String name, String memo) {
+	
+	public PlacesaveDTO(int pidx, String name, int place, int activity, String addr, String memo, double lat,
+			double lng) {
 		super();
 		this.pidx = pidx;
-		this.pluscode = pluscode;
+		this.name = name;
 		this.place = place;
 		this.activity = activity;
-		this.name = name;
+		this.addr = addr;
 		this.memo = memo;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public int getPidx() {
@@ -29,14 +35,6 @@ public class PlacesaveDTO {
 
 	public void setPidx(int pidx) {
 		this.pidx = pidx;
-	}
-
-	public String getPluscode() {
-		return pluscode;
-	}
-
-	public void setPluscode(String pluscode) {
-		this.pluscode = pluscode;
 	}
 
 	public int getPlace() {
@@ -69,6 +67,30 @@ public class PlacesaveDTO {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
 	}	
 	
 }

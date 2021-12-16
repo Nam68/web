@@ -41,6 +41,6 @@
 		SELECT get_seq('pidx') FROM dual;
 		</selectKey>
 		INSERT INTO placesave
-		VALUES(#{pidx}, #{pluscode}, #{place}, 0, #{name}, #{memo});
+		VALUES(#{pidx}, #{name}, #{place}, 0, #{addr}, #{memo}, #{lat}, #{lng});
 	</insert>
 </mapper>

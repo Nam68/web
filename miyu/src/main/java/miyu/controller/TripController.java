@@ -61,15 +61,10 @@ public class TripController {
 		return mav;
 	}
 	
-	@RequestMapping("/tripcontent.do")
-	public ModelAndView tripContent(HttpSession session, int pidx) {
-		ModelAndView mav = new ModelAndView();
-		if(us.adminCheck(session, mav)) {
-			session.setAttribute("header", "trip");
-			mav.addObject("placesave", ts.placesaveSelect(pidx));
-			mav.setViewName("trip/tripContent");
-		}
-		return mav;
+	@RequestMapping("/tripContent.do")
+	@ResponseBody
+	public PlacesaveDTO tripContent(int pidx) {
+		return ts.placesaveSelect(pidx);
 	}
 	
 	@RequestMapping("/regionPick.do")

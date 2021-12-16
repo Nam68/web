@@ -52,7 +52,7 @@ function initMap() {
 	// 자동완성기능 초기화 코드
   	const input = document.getElementById("pac-input");
   	const options = {
-		    	fields: ["formatted_address", "geometry", "name", "address_components", "plus_code"],
+		    	fields: ["formatted_address", "geometry", "name", "address_components"],
 		    	strictBounds: false,
 		  	};
   	const autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -91,7 +91,7 @@ function initMap() {
 	        		// 이렇게 두 번 검색하는 이유 : findPlaceFromQuery() 메서드로는 address_components 정보를 검색할 수 없음
 	        		var request = {
 	        			  	placeId: results[0].place_id,
-	        			  	fields: ["formatted_address", "geometry", "name", "address_components", "plus_code"]
+	        			  	fields: ["formatted_address", "geometry", "name", "address_components"]
 	        			};
 	        		service.getDetails(request, (place, status) => { // 상세정보 검색 요청
 	        			if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -132,7 +132,9 @@ function createMarker(place, marker, infowindow, infowindowContent) {
 // 구글맵 정보를 form에 입력하는 메서드
 function inputPlaceInfo(place) {
 	$('#pac-input').val(place.name);
-    $('#plus_code-input').val(place.plus_code==null? 'Country or City':place.plus_code.global_code); // plus code가 없으면 도시명/국가명
+	$('#addr-input').val(place.formatted_address);
+	$('#lat-input').val(place.geometry.location.lat());
+	$('#lng-input').val(place.geometry.location.lng());
     
     var addr_json = place.address_components; //주소값이 분할되어 담겨 있는 JSON
     var region = ''; //지역명 저장 변수
@@ -204,28 +206,27 @@ function regionPicker(region) {
 		  </script>
 		</div>
 		<div class="mb-3">
-		  <label for="plus_code-input" class="form-label">Plus Code</label>
+		  <label for="addr-input" class="form-label">Address</label>
 		  <div class="position-relative">
-		    <input id="plus_code-input" class="form-control" name="pluscode" type="text" readOnly placeholder="Please Write Place">
+		    <input id="addr-input" class="form-control" name="addr" type="text" readOnly placeholder="Please Write Place">
 		    <div class="position-absolute top-50 end-0 translate-middle-y p-3">
-		      <svg role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="住所代わりの、軽度・緯度に基づいた位置コードです<br>グーグルマップにて使えます" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
-		      <svg id="plus_code-copy" role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16"><path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>		      
+		      <svg id="addr-copy" role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16"><path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>		      
 		      <script>
-			    $('#plus_code-input').on('click', function() {
+			    $('#addr-input').on('click', function() {
 					$('#pac-input').focus();
 				});
 
 			    // 복사 관련 코드
-				$('#plus_code-copy').on('click', function() {
-			    	const copy = $('#plus_code-input').select();
+				$('#addr-copy').on('click', function() {
+			    	const copy = $('#addr-input').select();
 			    	document.execCommand('copy');
 
 			    	// 복사할 내용의 유무에 따라 출력되는 토스트의 내용을 바꿈
-					if($('#plus_code-input').val() != '') {
+					if($('#addr-input').val() != '') {
 						$('.toast-body').html('コピーが完了されました');
 					} else {
 						$('.toast-body').html('一先ず場所を選んでください');
-						$('#plus_code-input').trigger('click');
+						$('#addr-input').trigger('click');
 					}
 				});
 			      
@@ -262,6 +263,10 @@ function regionPicker(region) {
 			</script>
 		  </div>
 		</div>
+		<div>
+		  <input id="lat-input" class="form-control" name="lat" type="hidden">
+		  <input id="lng-input" class="form-control" name="lng" type="hidden">
+		</div>
 		<div class="mb-3">
 		  <label for="memo-input" class="form-label">Memo</label>
 		  <textarea id="memo-input" class="form-control" name="memo" rows="5"></textarea>
@@ -289,7 +294,7 @@ function regionPicker(region) {
 		    		}
 		    		
 		    		if($('#pac-input').val() == '' || $('#region-number').val() == '' || $('#plus_code-input').val() == '') {
-		    			window.alert('no');
+		    			window.alert('場所を入力してください');
 		    			return;
 		    		}
 		    		
