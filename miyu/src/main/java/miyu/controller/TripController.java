@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import miyu.app.EnumStore.Activity;
 import miyu.trip.model.PlacesaveDTO;
 import miyu.trip.service.TripService;
 import miyu.user.model.UserDTO;
@@ -51,6 +52,9 @@ public class TripController {
 			mav.addObject("placesave", ts.placesaveListForPage(cp));
 			mav.addObject("page", ts.tripPageCode(cp));
 			
+			Class Activity = Activity.class;
+			
+			mav.addObject("test", Activity.getEnumConstants());
 			mav.setViewName("trip/place/placeList");
 		}
 		return mav;
@@ -83,7 +87,7 @@ public class TripController {
 	@RequestMapping("/placeListSearchMenu.do")
 	@ResponseBody
 	public List placeListSearchMenu(int searchNum) {
-		return null;
+		return ts.placeListSearchMenu(searchNum);
 	}
 	
 }

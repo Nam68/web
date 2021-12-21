@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import miyu.app.EnumStore;
 import miyu.app.FileManagement;
 import miyu.app.PageManagement;
 import miyu.memory.model.MemoryDAO;
@@ -80,7 +81,7 @@ public class MemoryServiceImple implements MemoryService {
 	}
 	
 	public String memoryPageCode(int cp, int count) {
-		return p.paginationCode(cp, count, PAGE_SIZE, LIST_SIZE, COMMAND);
+		return p.paginationCode(cp, count, PAGE_SIZE, LIST_SIZE, EnumStore.MyCommand.MEMORY);
 	}
 
 }

@@ -12,7 +12,6 @@ public interface MemoryService {
 	
 	public static final int LIST_SIZE = 9;
 	public static final int PAGE_SIZE = 10;
-	public static final String COMMAND = "memoryList.do";
 	
 	public int memoryCount();
 	

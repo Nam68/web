@@ -70,7 +70,7 @@
 		WHERE ps.activity = a.anum
 		ORDER BY anum
 	</select>
-	<select id="placeListSearchMenuCountry" resultType="country">
+	<select id="placeListSearchMenuKorea" resultType="country">
 		<![CDATA[
 		SELECT c.*,
 			case

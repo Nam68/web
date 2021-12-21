@@ -61,10 +61,15 @@ function initPage() {
     <div class="mt-5 mx-auto col-9 row">
       <div class="col-sm-3">
         <select id="firstSearchMenu" class="form-select">
+        	<c:forEach items="${test }" var="t">
+        		<option value="0">${t }</option>
+        	</c:forEach>
+        <!-- 
 	      <option value="0" ${searchNum == 0? 'selected':'' }>All</option>
 	      <option value="1" ${searchNum == 1? 'selected':'' }>Activity</option>
 	      <option value="2" ${searchNum == 2? 'selected':'' }>Country</option>
 	      <option value="3" ${searchNum == 3? 'selected':'' }>Region</option>
+	     -->
 	    </select>
 	  </div>
       <div id="secondSelectboxPlaceholder" class="col-sm-3">

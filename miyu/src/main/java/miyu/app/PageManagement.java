@@ -1,5 +1,7 @@
 package miyu.app;
 
+import miyu.app.EnumStore.MyCommand;
+
 public class PageManagement {
 	
 	public int startList(int cp, int size) {
@@ -30,7 +32,7 @@ public class PageManagement {
 		return last;
 	}
 	
-	public String paginationCode(int cp, int count, int pageSize, int listSize, String command) {
+	public String paginationCode(int cp, int count, int pageSize, int listSize, MyCommand command) {
 		String previous = startPage(cp, pageSize)<=1? " disabled":"";
 		String next = pageGroup(count, listSize)==lastPage(cp, count, pageSize, listSize)? " disabled":"";
 		StringBuffer page = new StringBuffer();
@@ -39,13 +41,13 @@ public class PageManagement {
 			if(i == cp) {
 				page.append("active");
 			}
-			page.append("\"><a class=\"page-link\" href=\""+command+"?cp="+i+"\">"+i+"</a></li>");
+			page.append("\"><a class=\"page-link\" href=\""+command.getValue()+"?cp="+i+"\">"+i+"</a></li>");
 		}
 		
 		String code = "<nav aria-label=\"Page navigation\">"
 		+ "  <ul class=\"pagination justify-content-center\">"
 		+ "    <li class=\"page-item"+previous+"\">"
-		+ "      <a class=\"page-link\" href=\""+command+"?cp="+(startPage(cp, pageSize)-pageSize)+"\" aria-label=\"Previous\">"
+		+ "      <a class=\"page-link\" href=\""+command.getValue()+"?cp="+(startPage(cp, pageSize)-pageSize)+"\" aria-label=\"Previous\">"
 		+ "        <span aria-hidden=\"true\">&laquo;</span>"
 		+ "      </a>"
 		+ "    </li>"

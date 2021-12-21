@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import miyu.app.EnumStore;
 import miyu.app.PageManagement;
 import miyu.trip.model.PlaceDTO;
 import miyu.trip.model.PlacesaveDTO;
@@ -67,16 +68,27 @@ public class TripServicecImple implements TripService {
 	/*** App 관련 메서드 ***/
 	
 	public String tripPageCode(int cp) {
-		return p.paginationCode(cp, dao.placesaveCount(), PAGE_SIZE, LIST_SIZE, COMMAND);
+		return p.paginationCode(cp, dao.placesaveCount(), PAGE_SIZE, LIST_SIZE, EnumStore.MyCommand.TRIP);
 	}
 	
 	public List placeListSearchMenu(int searchNum) {
-		return null;
+		List list = null;
+		if(searchNum == PlaceSearchMenu.ACTIVTY.getNum()) {
+			dao.activityList();
+		} else if(searchNum == PlaceSearchMenu.COUNTRY.getNum()) {
+			
+		} else if(searchNum == PlaceSearchMenu.REGION.getNum()) {
+			
+		}
+		return list;
 	}
 	
 	public List placeListSearch(String searchText) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
 	
 }

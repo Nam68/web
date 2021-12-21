@@ -7,6 +7,8 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import miyu.trip.service.TripService;
+
 public class TripDAOImple implements TripDAO {
 
 	@Autowired
@@ -66,8 +68,18 @@ public class TripDAOImple implements TripDAO {
 	
 	/*** 검색 관련 메서드 ***/
 	
-	public List placeListSearchMenu(int searchNum) {
-		sql.selectList("");//
+	public List placeListSearchMenuActivity() {
+		sql.selectList("placeListSearchMenuActivity");
+		return null;
+	}
+	
+	public List placeListSearchMenuPlace() {
+		sql.selectList("placeListSearchMenuPlace");
+		return null;
+	}
+	
+	public List placeListSearchMenuCountry() {
+		sql.selectList("placeListSearchMenuCountry");
 		return null;
 	}
 	
