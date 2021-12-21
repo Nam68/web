@@ -46,4 +46,43 @@
 		INSERT INTO placesave
 		VALUES(#{pidx}, #{name}, #{place}, 0, #{addr}, #{memo}, #{lat}, #{lng});
 	</insert>
+	<update id="placesaveUpdate" parameterType="placesave">
+		UPDATE placesave
+		SET name=#{name}, place=#{place}, activity=2, addr=#{addr}, memo=#{memo}, lat=#{lat}, lng=#{lng}
+		WHERE pidx=#{pidx}
+	</update>
+	
+	<!-- activity 관련 -->
+	<select id="activityList" resultType="activity">
+		SELECT * FROM activity ORDER BY anum
+	</select>
+	
+	<!-- 리스트 검색 관련 -->
+	<select id="placeListSearchMenuPlace" resultType="place">
+		SELECT DISTINCT p.* 
+		FROM place p, placesave ps
+		WHERE ps.place = p.pnum
+		ORDER BY pnum
+	</select>
+	<select id="placeListSearchMenuActivity" resultType="activity">
+		SELECT DISTINCT a.* 
+		FROM activity a, placesave ps
+		WHERE ps.activity = a.anum
+		ORDER BY anum
+	</select>
+	<select id="placeListSearchMenuCountry" resultType="country">
+		<![CDATA[
+		SELECT c.*,
+			case
+				when c.count > 0 then '韓国'
+				ELSE ''
+			END AS NAME
+		FROM
+		(
+		SELECT DISTINCT COUNT(*) AS count
+		FROM place p, placesave ps
+		WHERE ps.place = p.pnum AND pnum < 100
+		) c
+		]]>
+	</select>
 </mapper>

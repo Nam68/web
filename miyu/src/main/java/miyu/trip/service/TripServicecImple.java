@@ -50,12 +50,33 @@ public class TripServicecImple implements TripService {
 		return dao.placesaveAdd(dto);
 	}
 	
+	public int placesaveUpdate(PlacesaveDTO dto) {
+		return dao.placesaveUpdate(dto);
+	}
 	
 	
-	/*** placesaveDTO 관련 메서드 ***/
+	
+	/*** activityDTO 관련 메서드 ***/
+	
+	public List activityList() {
+		return dao.activityList();
+	}
+	
+	
+	
+	/*** App 관련 메서드 ***/
 	
 	public String tripPageCode(int cp) {
 		return p.paginationCode(cp, dao.placesaveCount(), PAGE_SIZE, LIST_SIZE, COMMAND);
+	}
+	
+	public List placeListSearchMenu(int searchNum) {
+		return null;
+	}
+	
+	public List placeListSearch(String searchText) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

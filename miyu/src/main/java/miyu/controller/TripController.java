@@ -1,7 +1,9 @@
 package miyu.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,46 +27,38 @@ public class TripController {
 	
 	@Autowired
 	private UserService us;
-	
-	@RequestMapping("/tripMainPage.do")
-	public ModelAndView tripMainPage(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		if(us.adminCheck(session, mav)) {
-			session.setAttribute("header", "trip");
-			mav.setViewName("trip/tripMainPage");
-		}
-		return mav;
-	}
-	
-	@RequestMapping("/tripRegister.do")
-	public ModelAndView tripRegister(HttpSession session, @RequestParam(defaultValue = "0")int pidx) {
+		
+	@RequestMapping("/registerPlace.do")
+	public ModelAndView registerPlace(HttpSession session, @RequestParam(defaultValue = "0")int pidx) {
 		ModelAndView mav = new ModelAndView();
 		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
 			mav.addObject("place", ts.placeList());
 			if(pidx != 0) mav.addObject("placesave", ts.placesaveSelect(pidx));
-			mav.setViewName("trip/tripRegister");
+			mav.setViewName("trip/place/registerPlace");
 		}
 		return mav;
 	}
 	
-	@RequestMapping("/tripList.do")
-	public ModelAndView tripList(HttpSession session, @RequestParam(defaultValue = "1")int cp) {
+	@RequestMapping("/placeList.do")
+	public ModelAndView placeList(HttpSession session, @RequestParam(defaultValue = "1")int cp, 
+			@RequestParam(defaultValue = "0")int searchNum, @RequestParam(defaultValue = "0")String searchText) {
 		ModelAndView mav = new ModelAndView();
 		if(us.adminCheck(session, mav)) {
 			session.setAttribute("header", "trip");
-			mav.addObject("place", ts.placeList());
 			if(cp != 1) mav.addObject("scroll_animation_cancel", true);
+			
 			mav.addObject("placesave", ts.placesaveListForPage(cp));
 			mav.addObject("page", ts.tripPageCode(cp));
-			mav.setViewName("trip/tripList");
+			
+			mav.setViewName("trip/place/placeList");
 		}
 		return mav;
 	}
 	
-	@RequestMapping("/tripContent.do")
+	@RequestMapping("/placeContent.do")
 	@ResponseBody
-	public PlacesaveDTO tripContent(int pidx) {
+	public PlacesaveDTO placeContent(int pidx) {
 		return ts.placesaveSelect(pidx);
 	}
 	
@@ -74,10 +68,22 @@ public class TripController {
 		return ts.regionPick(region);
 	}
 	
-	@RequestMapping(value = "/addTrip.do", method = RequestMethod.POST)
+	@RequestMapping(value = "placeAdd.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int addTrip(PlacesaveDTO dto) {
+	public int placeAdd(PlacesaveDTO dto) {
 		return ts.placesaveAdd(dto);
+	}
+	
+	@RequestMapping(value = "/placeUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int placeUpdate(PlacesaveDTO dto) {
+		return ts.placesaveUpdate(dto);
+	}
+	
+	@RequestMapping("/placeListSearchMenu.do")
+	@ResponseBody
+	public List placeListSearchMenu(int searchNum) {
+		return null;
 	}
 	
 }

@@ -56,11 +56,18 @@
               Memory
             </a>
           </li>
-          <li>
-            <a href="tripMainPage.do" class="nav-link ${sessionScope.header == 'trip'? 'text-primary':'text-white' }">
+          <li class="dropdown">
+            <a href="#" class="nav-link ${sessionScope.header == 'trip'? 'text-primary':'text-white' } dropdown-toggle" id="dropdownTripMenu" data-bs-toggle="dropdown" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journals d-block mx-auto mb-1"><use xlink:href="#trip"/></svg>
               Trip
             </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownTripMenu">
+		      <li><a class="dropdown-item" href="registerPlace.do">Register Place</a></li>
+		      <li><a class="dropdown-item" href="placeList.do">Place List</a></li>
+		      <li><hr class="dropdown-divider"></li>
+		      <li><a class="dropdown-item" href="#">Register Trip Plan</a></li>
+		      <li><a class="dropdown-item" href="#">Trip Plan List</a></li>
+		    </ul>
           </li>
           <li>
             <a href="#" class="nav-link ${sessionScope.header == 'request'? 'text-primary':'text-white' }">

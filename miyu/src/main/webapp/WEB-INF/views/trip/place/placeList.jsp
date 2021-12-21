@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Trip List</title>
+<title>Place List</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,6 +18,8 @@
 #infowindow-content .title {font-weight: bold; }
 #infowindow-content {display: none; }
 #map #infowindow-content {display: inline; }
+
+#secondSearchMenu {display: none; }
 </style>
 <script>
 let map;
@@ -54,9 +56,51 @@ function initPage() {
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <section class="container">
   <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold mb-5">Trip List</h1>
+    <h1 class="display-5 fw-bold mb-5">Place List</h1>
     <hr>    
-    <div class="mt-5 mx-auto col-9 row gap-5">
+    <div class="mt-5 mx-auto col-9 row">
+      <div class="col-sm-3">
+        <select id="firstSearchMenu" class="form-select">
+	      <option value="0" ${searchNum == 0? 'selected':'' }>All</option>
+	      <option value="1" ${searchNum == 1? 'selected':'' }>Activity</option>
+	      <option value="2" ${searchNum == 2? 'selected':'' }>Country</option>
+	      <option value="3" ${searchNum == 3? 'selected':'' }>Region</option>
+	    </select>
+	  </div>
+      <div id="secondSelectboxPlaceholder" class="col-sm-3">
+        <select id="secondSearchMenu" class="form-select">
+	    </select>
+	  </div>
+	  <script>
+	  	// 셀렉트박스 선택하면 다른 셀렉트박스를 만들어주는 코드
+	  	$('#firstSearchMenu').on('change', function() {
+	  		if($(this).val() == 0) {
+	  			$('#secondSearchMenu').css('display', 'none');
+	  			$('#secondSearchMenu').html('');
+	  		} else {
+	  			$('#secondSearchMenu').css('display', 'block');
+				
+	  			$.ajax({
+	  				url: 'placeListSearchMenu.do',
+	  				data: {searchNumber: $(this).val()},
+	  				success: function(data) {
+	  					var code = '<select id="secondSearchMenu" class="form-select">';
+	  					for(var i = 0; i < data.length; i++) {
+	  						code += '<option value="'+data[i]+'">'+data[i]+'</option>';			
+	  					}
+	  					code += '</select>';
+	  					
+	  					$('#secondSearchMenu').html(code);
+	  				}
+	  			})
+	  			.fail(function() {
+	  				window.alert('request: failed!');
+	  			});
+	  		}
+	  	});
+	  </script>
+    </div>
+    <div class="mt-2 mx-auto col-9 row gap-5">
   	  <table class="table table-hover">
 	    <thead class="table-dark">
 	      <tr>
@@ -81,7 +125,7 @@ function initPage() {
     </div>
     <div class="mx-auto mt-2 col-9 position-relative">
     ${page }
-    <button class="btn btn-outline-secondary position-absolute top-0 end-0" type="button">Return</button>
+    <button class="btn btn-outline-danger position-absolute top-0 end-0" type="button">Add</button>
     </div>   	
 	  <script>
 	  	$('.placesave').on('click', function() {
@@ -89,7 +133,7 @@ function initPage() {
 	  		$('#selected_pidx').val(pidx);
 	  		
 	  		$.ajax({
-	  			url: 'tripContent.do',
+	  			url: 'placeContent.do',
 	  			data: {pidx: pidx},
 	  			success: function(data) {
 	  				// 맵 세팅 코드
@@ -104,35 +148,35 @@ function initPage() {
 		    	    infowindow.open(map, marker);
 	  				
 		    	    // 모달 생성 코드
-	  				$('#tripContentModalLabel').html(data.name);
+	  				$('#placeContentModalLabel').html(data.name);
 		    	    $('.name').html(data.name);
 		    	    $('.place').html(data.jpname);
 		    	    $('.activity').html(data.activityText);
 		    	    $('.addr').html(data.addr);
 		    	    $('.memo').html(data.memo);
 		    	    
-	  				$('#tripContentModalButton').trigger('click');
+	  				$('#placeContentModalButton').trigger('click');
 	  			}
 	  		})
 	  		.fail(function() {
 	  			window.alert('request: failed!');
 	  		});
 	  	});
-    	$('.btn-outline-secondary').on('click', function() {
-    		location.href = 'tripMainPage.do';
+    	$('.btn-outline-danger').on('click', function() {
+    		location.href = 'registerPlace.do';
     	});
     	</script>
     </div>
 </section>
 
 <!-- Button trigger modal -->
-<input id="tripContentModalButton" type="hidden" data-bs-toggle="modal" data-bs-target="#tripContentModal">
+<input id="placeContentModalButton" type="hidden" data-bs-toggle="modal" data-bs-target="#placeContentModal">
 <!-- Modal -->
-<div class="modal fade" id="tripContentModal" tabindex="-1" aria-labelledby="tripContentModalLabel" aria-hidden="true">
+<div class="modal fade" id="placeContentModal" tabindex="-1" aria-labelledby="placeContentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tripContentModalLabel">Title</h5>
+        <h5 class="modal-title" id="placeContentModalLabel">Title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body row">
@@ -159,7 +203,7 @@ function initPage() {
         <script>
         	$('.btn-primary').on('click', () => {
         		var pidx = $('#selected_pidx').val();
-        		location.href = 'tripRegister.do?pidx='+pidx;
+        		location.href = 'registerPlace.do?pidx='+pidx;
         	});
         </script>
       </div>

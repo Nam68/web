@@ -14,5 +14,8 @@ public interface TripDAO {
 	public List placesaveListForPage(int start, int last);
 	public PlacesaveDTO placesaveSelect(int pidx);
 	public int placesaveAdd(PlacesaveDTO dto);
+	public int placesaveUpdate(PlacesaveDTO dto);
 	
+	/*** activityDTO 관련 메서드 ***/
+	public List activityList();
 }

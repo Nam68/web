@@ -49,5 +49,26 @@ public class TripDAOImple implements TripDAO {
 	public int placesaveAdd(PlacesaveDTO dto) {
 		return sql.insert("placesaveAdd", dto);
 	}
-
+	
+	public int placesaveUpdate(PlacesaveDTO dto) {
+		return sql.update("placesaveUpdate", dto);
+	}
+	
+	
+	
+	/*** activityDTO 관련 메서드 ***/
+	
+	public List activityList() {
+		return sql.selectList("activityList");
+	}
+	
+	
+	
+	/*** 검색 관련 메서드 ***/
+	
+	public List placeListSearchMenu(int searchNum) {
+		sql.selectList("");//
+		return null;
+	}
+	
 }

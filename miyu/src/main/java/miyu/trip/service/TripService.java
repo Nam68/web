@@ -19,8 +19,14 @@ public interface TripService {
 	public List placesaveListForPage(int cp);
 	public PlacesaveDTO placesaveSelect(int pidx);
 	public int placesaveAdd(PlacesaveDTO dto);
+	public int placesaveUpdate(PlacesaveDTO dto);
+	
+	/*** activityDTO 관련 메서드 ***/
+	public List activityList();
 	
 	/*** App 관련 메서드 ***/
 	public String tripPageCode(int cp);
+	public List placeListSearchMenu(int searchNum);
+	public List placeListSearch(String searchText);
 	
 }

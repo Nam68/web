@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Register Trip</title>
+<title>Register Place</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -176,12 +176,13 @@ function initPage() {
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <section class="container mb-3">
   <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold mb-5">Register Trip</h1>
+    <h1 class="display-5 fw-bold mb-5">Register Place</h1>
     <hr> 
     <div class="mt-5 mx-auto row gap-5">
       <div id="map" class="rounded col-sm"></div>
       <div id="input-form" class="col-sm text-start">
       <form name="form">
+      	<input name="pidx" type="hidden" value="${placesave.pidx }">
 		<div class="mb-3">
 		  <label for="pac-input" class="form-label">Place Search</label>
 		  <input id="pac-input" class="form-control" name="name" value="${placesave.name }" type="text" placeholder="Search...">
@@ -280,11 +281,13 @@ function initPage() {
   		  <div class="d-grid gap-2 d-md-block">
 		    <button id="form-submit" class="btn btn-primary" type="button">Save</button>
 		    <c:if test="${empty placesave }">
-		    <button class="btn btn-danger" type="reset">Reset</button>
+		      <button class="btn btn-outline-danger" type="reset">Reset</button>
 		    </c:if>
-		    <button class="btn btn-outline-secondary" type="button">Cancel</button>
+		    <c:if test="${!empty placesave }">
+		      <button class="btn btn-outline-secondary" type="button">Cancel</button>
+		    </c:if>
 		    <script>
-		    	$('.btn-danger').on('click', () => {
+		    	$('.btn-outline-danger').on('click', () => {
 		    		map.setCenter({ lat: 38, lng: 133 });
 		    		map.setZoom(5);
 		    		infowindow.close(); // 마커 정보창 초기화
@@ -292,18 +295,17 @@ function initPage() {
 		    	});
 		    	
 		    	$('.btn-outline-secondary').on('click', () => {
-		    		location.href = 'tripMainPage.do';
+		    		history.back();
 		    	});
 		    	
 		    	$('#form-submit').on('click', () => {
-		    		
 		    		if($('#pac-input').val() == '' || $('#region-number').val() == '' || $('#addr-input').val() == '') {
 		    			window.alert('場所を入力してください');
 		    			return;
 		    		}
 		    		
 		    		var queryString = $('form[name="form"]').serialize() ;
-		    		var url = '${empty placesave? 'addTrip.do':'updateTrip.do'}';
+		    		var url = '${empty placesave? 'placeAdd.do':'placeUpdate.do'}';
 		    		$.ajax({
 		    			url: url,
 		    			data: queryString,

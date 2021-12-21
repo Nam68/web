@@ -6,6 +6,8 @@
   <typeAliases>
 	<typeAlias type="miyu.memory.model.MemoryDTO" alias="memory"/>	
 	<typeAlias type="miyu.memory.model.MemoryImgDTO" alias="memoryImg"/>	
+	<typeAlias type="miyu.trip.model.ActivityDTO" alias="activity"/>	
+	<typeAlias type="miyu.trip.model.CountryDTO" alias="country"/>	
 	<typeAlias type="miyu.trip.model.PlaceDTO" alias="place"/>	
 	<typeAlias type="miyu.trip.model.PlacesaveDTO" alias="placesave"/>	
 	<typeAlias type="miyu.user.model.UserDTO" alias="user"/>
